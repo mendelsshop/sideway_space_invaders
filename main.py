@@ -10,14 +10,12 @@ prev_player_pos = None
 # TODO: detect collision with '<' if the 'O' collides than you lose the game
 # if the '-' collides with '<' then '<' is destroyed
 # if 'O' reaches the end of the board than you win the game
-
-# make a list called 'board' and assign it 5 'row'
 board = {'row1': [' '] * 50, 'row2': [' '] * 50, 'row3': [' '] * 50, 'row4': [' '] * 50, 'row5': [' '] * 50}
 #  for each row in the dictionary 'board' append the '<' to the end of the row
 for row in board:
     board[row].append('<')
 
-for i in range(50):
+for i in range(51):
     time.sleep(.01)
     os.system("cls")
     if key_p == 'up' and prev_player_pos != 0:
@@ -28,6 +26,9 @@ for i in range(50):
 
     else:
         player_ps = random.randrange(5)
+    if board['row' + str(player_ps + 1)][i] == '<':
+        print('You lose!')
+        break
 
     print ("player_ps:", (player_ps+1,i))
     if prev_player_pos != None:
@@ -40,7 +41,7 @@ for i in range(50):
             print('-' * 51)
             prev_b = 0
             bulet = i+1
-            while bulet < 50:
+            while bulet < 51:
                 os.system('cls')
                 print('-' * 51)
                 for rowss in board:
@@ -54,12 +55,12 @@ for i in range(50):
                         bulet+=1
                     
                     print("".join(board[rowss]))
-                    board[rowss][prev_b] = ' '
+                    
                     last_elemnt = len(board[rowss])
-                    board[rowss][last_elemnt-1] = '<'
+                    # board[rowss][last_elemnt-1] = '<'
                 
                 print('-' * 51)
-                time.sleep(.1)
+                time.sleep(.00000000000000000001)
 
     else:
         print("-" * 51)
@@ -70,7 +71,7 @@ for i in range(50):
     key_p = ''
     shoot = False
     timer = time.time()
-    while (time.time() - timer < 1):
+    while (time.time() - timer < .5):
         # if the 2 seconds have passed, quit the loop
         if keyboard.is_pressed("up"):
             key_p = 'up'
