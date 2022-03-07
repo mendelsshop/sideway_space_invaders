@@ -28,7 +28,7 @@ jobs:
       run: |
         git config --local user.name  ${{ github.actor }}
         git add .
-        git commit -m ${{ github.event.commits[0].message }} -" formmated with black"
+        git commit -m ${{ github.event.commits[0].message }}" formmated with black"
     - name: Push changes  # push the output folder to your repo
       uses: ad-m/github-push-action@master
       with:
