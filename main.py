@@ -7,10 +7,24 @@ key_p = ""
 player_ps = random.randrange(5)
 shoot = False
 prev_player_pos = None
+enemys = 5
 # TODO: spawan '<' randomly in the last 7ish columns
 # TODO: detect collision with '<' if the 'O' collides than you lose the game
 # if the '-' collides with '<' then '<' is destroyed
 # if 'O' reaches the end of the board than you win the game
+def spawan_enemys(dict):
+    for i in range(random.randrange(1,2)):
+        x = random.randrange(44,51)
+        y = random.randrange(4)
+        if dict["row" + str(y+1)][x] == "<":
+            if y == 4:
+                y=0
+            else:
+                y+=1
+        dict["row" + str(y+1)][x] = "<"
+    return dict
+
+
 board = {
     "row1": [" "] * 50,
     "row2": [" "] * 50,
@@ -34,12 +48,14 @@ for i in range(51):
     else:
         player_ps = random.randrange(5)
     if board["row" + str(player_ps + 1)][i] == "<":
+        print("-" * 51)
+        for row in board:
+            print("".join(board[row]))
+        print("-" * 51)
         print("You lose!")
         break
 
-    print("player_ps:", (player_ps + 1, i))
     if prev_player_pos != None:
-        print("player_ps:", (prev_player_pos + 1, prev_i))
         board["row" + str(prev_player_pos + 1)][prev_i] = " "
 
     board["row" + str(player_ps + 1)][i] = "O"
@@ -53,6 +69,10 @@ for i in range(51):
             print("-" * 51)
             for rowss in board:
                 if board["row" + str(player_ps + 1)] == board[rowss]:
+                    # check if the current bulet position is the as "<"
+                    if board[rowss][bulet] == "<":
+                        enemys -= 1
+
                     board[rowss][bulet] = "-"
 
                     if prev_b != 0:
@@ -60,11 +80,15 @@ for i in range(51):
 
                     prev_b = bulet
                     bulet += 1
+                if enemys != 5:
+                    board = spawan_enemys(board)
+                    enemys = 5
+                if bulet == 51 and board[rowss][bulet-1] == "-":
+                    board[rowss][bulet-1] = " "
 
                 print("".join(board[rowss]))
 
                 last_elemnt = len(board[rowss])
-                # board[rowss][last_elemnt-1] = '<'
 
             print("-" * 51)
             time.sleep(0.00000000000000000001)
@@ -74,6 +98,9 @@ for i in range(51):
         for rows in board:
             print("".join(board[rows]))
         print("-" * 51)
+    if board["row" + str(player_ps + 1)][50] == "O":
+        print("You win!")
+        break
 
     key_p = ""
     shoot = False
