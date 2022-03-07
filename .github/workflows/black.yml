@@ -14,6 +14,10 @@ on:
 jobs:
   black:
     runs-on: ubuntu-latest
+    env:
+      # The following variables are available to the workflow
+      Messages:
+        - "${{ github.event.commits[0].message }} -" formmated with black"
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python
@@ -28,7 +32,7 @@ jobs:
       run: |
         git config --local user.name  ${{ github.actor }}
         git add .
-        git commit -m ""${{ github.event.commits[0].message }} +" formmated with black"
+        git commit -m $Messages
     - name: Push changes  # push the output folder to your repo
       uses: ad-m/github-push-action@master
       with:
