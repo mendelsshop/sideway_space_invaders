@@ -12,11 +12,7 @@ prev_player_pos = None
 # if the '-' collides with '<' then '<' is destroyed
 # if 'O' reaches the end of the board than you win the game
 board = {
-    "row1": [" "] * 50,
-    "row2": [" "] * 50,
-    "row3": [" "] * 50,
-    "row4": [" "] * 50,
-    "row5": [" "] * 50,
+    "row1": [" "] * 50,"row2": [" "] * 50,"row3": [" "] * 50,"row4": [" "] * 50,"row5": [" "] * 50,
 }
 #  for each row in the dictionary 'board' append the '<' to the end of the row
 for row in board:
