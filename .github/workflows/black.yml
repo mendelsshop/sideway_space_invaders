@@ -23,4 +23,4 @@ jobs:
         python -m pip install --upgrade pip
         pip install black codespell
     - name: Check with black
-      run: black .
+      run: sudo black .
