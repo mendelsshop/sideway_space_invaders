@@ -1,108 +1,85 @@
 import os
 import random
 import time
-import keyboard
+import keyboard 
 key_p = ''
-z = 0
+player_ps = random.randrange(5)
 shoot = False
+prev_player_pos = None
+# TODO: spawan '<' randomly in the last 7ish columns
+# TODO: detect collision with '<' if the 'O' collides than you lose the game
+# if the '-' collides with '<' then '<' is destroyed
+# if 'O' reaches the end of the board than you win the game
+
+# make a list called 'board' and assign it 5 'row'
+board = {'row1': [' '] * 50, 'row2': [' '] * 50, 'row3': [' '] * 50, 'row4': [' '] * 50, 'row5': [' '] * 50}
+#  for each row in the dictionary 'board' append the '<' to the end of the row
+for row in board:
+    board[row].append('<')
+
 for i in range(50):
-    
-    time.sleep(.1)
+    time.sleep(.01)
     os.system("cls")
-    
-    print("-" * 51)
-    if key_p == 'up' and z > 0:
-        # move up the 'o relative to varaible z
-        z -= 1 
-        for k in range(z):
-            print(' ' * 49, '<')
-        if i == 49:
-            print(' ' * 48, 'o<')
-        elif i == 48:
-            print(' ' * 47, 'o <')
-        else:
-            print((i * ' ') + 'o', end=' ')
-            if shoot:
-                left = 47 - i
-                if left % 2 == 0:
-                    left_left = int(left / 2)
-                    left_right = int(left_left)
-                else:
-                    left_left = int((left - 1) / 2)
-                    left_right = int(left/ 2) + 1
-                print(' ' * left_right + '-' + ' ' * left_left + '<')
+    if key_p == 'up' and prev_player_pos != 0:
+        player_ps -= 1
 
-            else:
-                print((' ' * (46 - i)), ' <')
-        for j in range(4 - z):
-            print(' ' * 49, '<')
-    elif key_p == 'down' and z < 4:
-        # move down the 'o relative to variable z
-        z += 1
-        for k in range(z):
-            print(' ' * 49, '<')
-        if i == 49:
-            print(' ' * 48, 'o<')
-        elif i == 48:
-            print(' ' * 47, 'o <')
-        else:
-            print((i * ' ') + 'o', end=' ')
-            if shoot:
-                left = 47 - i
-                if left % 2 == 0:
-                    left_left = int(left / 2)
-                    left_right = int(left_left)
-                else:
-                    left_left = int((left - 1) / 2)
-                    left_right = int(left/ 2) + 1
-                print(' ' * left_right + '-' + ' ' * left_left + '<')
-
-            else:
-                print((' ' * (46 - i)), ' <')
-        for j in range(4 - z):
-            print(' ' * 49, '<')
+    elif key_p == 'down' and prev_player_pos != 4:
+        player_ps += 1
 
     else:
-        z = random.randrange(5)
-        for k in range(z):
-            print(' ' * 49, '<')
-        if i == 49:
-            print(' ' * 48, 'o<')
-        elif i == 48:
-            print(' ' * 47, 'o <')
-        else:
-            print((i * ' ') + 'o', end=' ')
-            if shoot:
-                left = 47 - i
-                if left % 2 == 0:
-                    left_left = int(left / 2)
-                    left_right = int(left_left)
-                else:
-                    left_left = int((left - 1) / 2)
-                    left_right = int(left/ 2) + 1
-                print(' ' * left_right + '-' + ' ' * left_left + '<')
+        player_ps = random.randrange(5)
 
-            else:
-                print((' ' * (46 - i)), ' <')
+    print ("player_ps:", (player_ps+1,i))
+    if prev_player_pos != None:
+        print ("player_ps:", (prev_player_pos+1,prev_i))
+        board['row' + str(prev_player_pos+1)][prev_i] = ' '
+    
+    board['row' + str(player_ps+1)][i] = 'O'
+    if shoot:
+            print("".join(board[rows]))
+            print('-' * 51)
+            prev_b = 0
+            bulet = i+1
+            while bulet < 50:
+                os.system('cls')
+                print('-' * 51)
+                for rowss in board:
+                    if board['row' + str(player_ps+1)] == board[rowss]:
+                        board[rowss][bulet] = '-'
 
-        for j in range(4 - z):
-            print(' ' * 49, '<')
+                        if prev_b != 0:
+                            board[rowss][prev_b] = ' '
 
-    print('-' * 51)
-    # print(key_p)
+                        prev_b = bulet
+                        bulet+=1
+                    
+                    print("".join(board[rowss]))
+                    board[rowss][prev_b] = ' '
+                    last_elemnt = len(board[rowss])
+                    board[rowss][last_elemnt-1] = '<'
+                
+                print('-' * 51)
+                time.sleep(.1)
+
+    else:
+        print("-" * 51)
+        for rows in board:  
+            print("".join(board[rows]))
+        print('-' * 51)
+
     key_p = ''
     shoot = False
-    # 
     timer = time.time()
     while (time.time() - timer < 1):
         # if the 2 seconds have passed, quit the loop
-        
         if keyboard.is_pressed("up"):
-            # print("up")
             key_p = 'up'
+
         elif keyboard.is_pressed("down"):
-            # print("down")
             key_p = 'down'
+
         if keyboard.is_pressed("space"):
             shoot = True
-    
+
+    prev_player_pos = player_ps
+    prev_i = i
