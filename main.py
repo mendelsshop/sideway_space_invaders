@@ -2,20 +2,21 @@ import os
 import random
 import time
 import keyboard
-import markdown
-import html2text
 
+
+clears = 'clear' if os.name == 'posix' else 'cls'
 # make a variable for the length and height of the board so we can change it for different levels
 # move most of the from here to somewhere else in src/ to make more modular
 # make a function to display the board instead of doing it in three lines each time
 # change it from a dictionary of lists to a list of lists
-# create a clear function that takes in integeer for the length of time to sleep before clearing the screen
 
 # open readme.md and convert to html
 def readme():
-    with open("readme.txt", "r") as f:
+    with open("README.txt", "r") as f:
         return f.read()
-
+def clear(times):
+    time.sleep(times)
+    os.system(clears)
 
 print(readme())
 print("press enter to start or q to quit")
@@ -38,8 +39,10 @@ def spawan_enemys(dict):
         if dict["row" + str(y + 1)][x] == "<":
             if y == 4:
                 y = 0
+
             else:
                 y += 1
+
         dict["row" + str(y + 1)][x] = "<"
     return dict
 
@@ -56,8 +59,7 @@ for row in board:
     board[row].append("<")
 
 for i in range(51):
-    time.sleep(0.01)
-    os.system("cls")
+    clear(0.1)
     if key_p == "up" and prev_player_pos != 0:
         player_ps -= 1
 
@@ -66,6 +68,7 @@ for i in range(51):
 
     else:
         player_ps = random.randrange(5)
+
     if board["row" + str(player_ps + 1)][i] == "<":
         print("-" * 51)
         for row in board:
@@ -84,7 +87,7 @@ for i in range(51):
         prev_b = 0
         bulet = i + 1
         while bulet < 51:
-            os.system("cls")
+            os.system(clears)
             print("-" * 51)
             for rowss in board:
                 if board["row" + str(player_ps + 1)] == board[rowss]:
@@ -102,6 +105,7 @@ for i in range(51):
                 if enemys != 5:
                     board = spawan_enemys(board)
                     enemys = 5
+
                 if bulet == 51 and board[rowss][bulet - 1] == "-":
                     board[rowss][bulet - 1] = " "
 
@@ -110,13 +114,14 @@ for i in range(51):
                 last_elemnt = len(board[rowss])
 
             print("-" * 51)
-            time.sleep(0.00000000000000000001)
+            time.sleep(0.1)
 
     else:
         print("-" * 51)
         for rows in board:
             print("".join(board[rows]))
         print("-" * 51)
+        
     if board["row" + str(player_ps + 1)][50] == "O":
         print("You win!")
         break
