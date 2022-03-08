@@ -16,6 +16,7 @@ def readme():
     with open("readme.txt", "r") as f:
         return f.read()
 
+
 print(readme(), end="")
 print("press enter to start")
 while True:
