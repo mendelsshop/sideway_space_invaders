@@ -13,10 +13,8 @@ import html2text
 
 # open readme.md and convert to html
 def readme():
-    with open("readme.md", "r") as f:
-        text = f.read()
-    return html2text.html2text(markdown.markdown(text))
-
+    with open("readme.txt", "r") as f:
+        return f.read()
 
 print(readme(), end="")
 print("press enter to start")
