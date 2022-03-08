@@ -13,15 +13,15 @@ enemys = 5
 # if the '-' collides with '<' then '<' is destroyed
 # if 'O' reaches the end of the board than you win the game
 def spawan_enemys(dict):
-    for i in range(random.randrange(1,2)):
-        x = random.randrange(44,51)
+    for i in range(random.randrange(1, 2)):
+        x = random.randrange(44, 51)
         y = random.randrange(4)
-        if dict["row" + str(y+1)][x] == "<":
+        if dict["row" + str(y + 1)][x] == "<":
             if y == 4:
-                y=0
+                y = 0
             else:
-                y+=1
-        dict["row" + str(y+1)][x] = "<"
+                y += 1
+        dict["row" + str(y + 1)][x] = "<"
     return dict
 
 
@@ -83,8 +83,8 @@ for i in range(51):
                 if enemys != 5:
                     board = spawan_enemys(board)
                     enemys = 5
-                if bulet == 51 and board[rowss][bulet-1] == "-":
-                    board[rowss][bulet-1] = " "
+                if bulet == 51 and board[rowss][bulet - 1] == "-":
+                    board[rowss][bulet - 1] = " "
 
                 print("".join(board[rowss]))
 
