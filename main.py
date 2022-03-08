@@ -18,10 +18,12 @@ def readme():
 
 
 print(readme(), end="")
-print("press enter to start")
+print("press enter to start or q to quit")
 while True:
     if keyboard.is_pressed("enter"):
         break
+    if keyboard.is_pressed("q"):
+        exit()
 key_p = ""
 player_ps = random.randrange(5)
 shoot = False
