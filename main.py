@@ -4,6 +4,11 @@ import time
 import keyboard
 import markdown
 import html2text
+# make a variable for the length and height of the board so we can change it for different levels
+# move most of the from here to somewhere else in /src to make more modular
+# make a function to display the board instead of doing it in three lines each time
+# change it from a dictionary of lists to a list of lists
+
 # open readme.md and convert to html
 def readme():
     with open("readme.md", "r") as f:
