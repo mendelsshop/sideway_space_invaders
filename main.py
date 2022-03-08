@@ -17,7 +17,7 @@ def readme():
         return f.read()
 
 
-print(readme(), end="")
+print(readme())
 print("press enter to start or q to quit")
 while True:
     if keyboard.is_pressed("enter"):
