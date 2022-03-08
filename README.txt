@@ -1,5 +1,3 @@
-
- 
     _____ _     _                                                      
    /  ___(_)   | |                                                     
    \ `--. _  __| | _____      ____ _ _   _                             
@@ -13,9 +11,8 @@
 \____/| .__/ \__,_|\___\___|  \___|_| |_|\_/ \__,_|\__,_|\___|_|  |___/
       | |                                                              
       |_|                                                           
-                              
-                                                         
-## How to play:
+                                                                        
+How to play:
 Use the up and down arrows to move the O (space ship).
 If you don't move the spaceship it will be moved randomly on the y axis.
 Use space to shoot a bullet can kill any enemy spaceship (<) on the x axis of the bullet.
