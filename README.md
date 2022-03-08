@@ -1,4 +1,4 @@
-
+[![black](https://github.com/mendelsshop/sideway_space_invaders/actions/workflows/black.yml/badge.svg)](https://github.com/mendelsshop/sideway_space_invaders/actions/workflows/black.yml)
  ```
     _____ _     _                                                      
    /  ___(_)   | |                                                     
