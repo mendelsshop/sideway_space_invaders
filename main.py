@@ -6,9 +6,10 @@ import markdown
 import html2text
 
 # make a variable for the length and height of the board so we can change it for different levels
-# move most of the from here to somewhere else in /src to make more modular
+# move most of the from here to somewhere else in src/ to make more modular
 # make a function to display the board instead of doing it in three lines each time
 # change it from a dictionary of lists to a list of lists
+# create a clear function that takes in integeer for the length of time to sleep before clearing the screen
 
 # open readme.md and convert to html
 def readme():
