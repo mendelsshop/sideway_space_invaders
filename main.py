@@ -12,6 +12,7 @@ clears = "clear" if os.name == "posix" else "cls"
 
 # open readme.md and convert to html
 
+
 def readme():
     with open("README.txt", "r") as f:
         return f.read()
@@ -20,6 +21,7 @@ def readme():
 def clear(times):
     time.sleep(times)
     os.system(clears)
+
 
 clear(0)
 print(readme())
