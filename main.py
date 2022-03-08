@@ -2,14 +2,23 @@ import os
 import random
 import time
 import keyboard
-
+import markdown
+import html2text
+# open readme.md and convert to html
+def readme():
+    with open("readme.md", "r") as f:
+        text = f.read()
+    return html2text.html2text(markdown.markdown(text))
+print(readme(), end="")
+print("press enter to start")
+while True:
+    if keyboard.is_pressed('enter'):
+        break
 key_p = ""
 player_ps = random.randrange(5)
 shoot = False
 prev_player_pos = None
 enemys = 5
-# TODO: spawan '<' randomly in the last 7ish columns
-# TODO: detect collision with '<' if the 'O' collides than you lose the game
 # if the '-' collides with '<' then '<' is destroyed
 # if 'O' reaches the end of the board than you win the game
 def spawan_enemys(dict):
