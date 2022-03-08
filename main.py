@@ -4,7 +4,7 @@ import time
 import keyboard
 
 
-clears = 'clear' if os.name == 'posix' else 'cls'
+clears = "clear" if os.name == "posix" else "cls"
 # make a variable for the length and height of the board so we can change it for different levels
 # move most of the from here to somewhere else in src/ to make more modular
 # make a function to display the board instead of doing it in three lines each time
@@ -14,9 +14,12 @@ clears = 'clear' if os.name == 'posix' else 'cls'
 def readme():
     with open("README.txt", "r") as f:
         return f.read()
+
+
 def clear(times):
     time.sleep(times)
     os.system(clears)
+
 
 print(readme())
 print("press enter to start or q to quit")
@@ -121,7 +124,7 @@ for i in range(51):
         for rows in board:
             print("".join(board[rows]))
         print("-" * 51)
-        
+
     if board["row" + str(player_ps + 1)][50] == "O":
         print("You win!")
         break
