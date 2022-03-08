@@ -11,6 +11,7 @@ clears = "clear" if os.name == "posix" else "cls"
 # change it from a dictionary of lists to a list of lists
 
 # open readme.md and convert to html
+
 def readme():
     with open("README.txt", "r") as f:
         return f.read()
@@ -20,7 +21,7 @@ def clear(times):
     time.sleep(times)
     os.system(clears)
 
-
+clear(0)
 print(readme())
 print("press enter to start or q to quit")
 while True:
@@ -142,6 +143,10 @@ for i in range(51):
 
         if keyboard.is_pressed("space"):
             shoot = True
+        if keyboard.is_pressed("q"):
+            print("Quitting...")
+            print("have a nice day.")
+            exit()
 
     prev_player_pos = player_ps
     prev_i = i
