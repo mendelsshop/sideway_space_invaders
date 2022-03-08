@@ -14,10 +14,12 @@ def readme():
     with open("readme.md", "r") as f:
         text = f.read()
     return html2text.html2text(markdown.markdown(text))
+
+
 print(readme(), end="")
 print("press enter to start")
 while True:
-    if keyboard.is_pressed('enter'):
+    if keyboard.is_pressed("enter"):
         break
 key_p = ""
 player_ps = random.randrange(5)
