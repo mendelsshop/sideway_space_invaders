@@ -13,7 +13,7 @@ is_pressed(PyObject *self, PyObject *args)
     if (strcmp(platform, "unix") == 0) {
         char input[MAX_STRING_SIZE] = {0};
         fgets(input, sizeof(input), stdin);
-        size_t inputLen = strlen(input);
+        int inputLen = strlen(input);
         for (int i = 0; i < inputLen; i++) {
             if (input[i] == '\33') {
                 if (input[i + 1] == 'A') {
@@ -32,13 +32,24 @@ is_pressed(PyObject *self, PyObject *args)
             }
 
         }
-    } else if (strcmp(platform, "win") == 0) {
-    } else {
-        printf("Unknown platform\n");
-    }
+}}
 
-    
+static PyMethodDef is_pressedMethods[] = {
+    {"is_pressed",  is_pressed, METH_VARARGS,
+     "keyboard input."},
+    {NULL, NULL, 0, NULL}        /* Sentinel */
+};
+static struct PyModuleDef is_pressedmodule = {
+    PyModuleDef_HEAD_INIT,
+    "is_pressed",   /* name of module */
+    NULL, /* module documentation, may be NULL */
+    -1,       /* size of per-interpreter state of the module,
+                 or -1 if the module keeps state in global variables. */
+    is_pressedMethods
+};
+
+PyMODINIT_FUNC
+PyInit_keyboard(void)
+{
+    return PyModule_Create(&is_pressedmodule);
 }
-
-// ImportError: dynamic module does not define init function (initkeyboard)
-
