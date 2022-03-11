@@ -21,15 +21,15 @@ fn is_pressed(py: Python, key: &str) -> PyResult<bool> {
             },
             Err(ReadlineError::Interrupted) => {
                 println!("CTRL-C");
-                Ok(false);
+                return Ok(false);
             },
             Err(ReadlineError::Eof) => {
                 println!("CTRL-D");
-                Ok(false);
+                return Ok(false);
             },
             Err(err) => {
                 println!("Error: {:?}", err);
-                Ok(false);
+                return Ok(false);
             }
         }
         // check if &key is = to the last key in keys return py<bool>
