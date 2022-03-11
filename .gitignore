@@ -1,3 +1,2 @@
-# ignore all rust artifacts
-*keyboard/target/
+*rust/keyboard/target/
 *.lock

@@ -1,0 +1,13 @@
+[package]
+name = "keyboard"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "keyboard"
+crate-type = ["cdylib"]
+
+[dependencies]
+rustyline = "9.1.2"
+cpython = {version = "0.7", features = ["extension-module"]}
+
