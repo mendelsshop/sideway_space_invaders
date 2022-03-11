@@ -1,0 +1,3 @@
+# ignore all rust artifacts
+*keyboard/target/
+*.lock
