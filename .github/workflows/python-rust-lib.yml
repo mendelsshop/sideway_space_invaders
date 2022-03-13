@@ -1,4 +1,11 @@
 name: python-rust-lib
+# figure out how to cross compile 
+# also need to figure out how to move compiled libraies (.so/pyd) to main directory 
+# and make sure they get named correctly like keyboard-macos.so so i can import them properly in main.py with an if statement to check which platform it is running on and import the library accordingly
+# https://github.com/PyO3/setuptools-rust/blob/main/.github/workflows/ci.yml
+# https://github.com/PyO3/setuptools-rust/issues/61
+# https://github.com/PyO3/setuptools-rust/blob/main/docs/building_wheels.md
+# https://github.com/samuelcolvin/rtoml/blob/e834a1ef2a51d4777a5bd99b03b671f719d217a7/.github/workflows/ci.yml#L60-L134
 
 # Controls when the workflow will run
 on:
