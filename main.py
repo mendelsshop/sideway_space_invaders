@@ -2,11 +2,6 @@ import os
 import random
 import time
 import sys
-
-sys.path.append(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    + "rust\keyboard\build\lib.win-amd64-3.7"
-)
 import keyboard
 
 clears = "clear" if os.name == "posix" else "cls"
