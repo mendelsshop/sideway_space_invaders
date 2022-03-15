@@ -3,8 +3,12 @@ import random
 import time
 import sys
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))+ "rust\keyboard\build\lib.win-amd64-3.7")
+sys.path.append(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    + "rust\keyboard\build\lib.win-amd64-3.7"
+)
 import keyboard
+
 clears = "clear" if os.name == "posix" else "cls"
 bullet_speed = 0.01 if os.name == "posix" else 0.000000000000000001
 # make a variable for the length and height of the board so we can change it for different levels
