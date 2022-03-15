@@ -27,9 +27,10 @@ clear(0)
 print(readme())
 print("press enter to start or q to quit")
 while True:
-    if keyboard.is_pressed("enter"):
+    key = keyboard.is_pressed()
+    if key == "enter":
         break
-    if keyboard.is_pressed("q"):
+    elif key == "q":
         exit()
 key_p = ""
 player_ps = random.randrange(5)
@@ -135,26 +136,19 @@ for i in range(51):
     key_p = ""
     shoot = False
     timer = time.time()
-    while time.time() - timer < 0.5:
-        # if the 2 seconds have passed, quit the loop
-        if keyboard.is_pressed("up"):
-            if key_p == "down":
-                key_p = "down"
-            else:
-                key_p = "up"
-
-        elif keyboard.is_pressed("down"):
-            if key_p == "up":
-                key_p = "up"
-            else:
-                key_p = "down"
-
-        if keyboard.is_pressed("space"):
+    while time.time() - timer < 1:
+        key = keyboard.is_pressed()
+        if key == "up":
+            key_p = "up"
+        if key == "down":
+            key_p = "down"
+        if key == "space":
             shoot = True
-        if keyboard.is_pressed("q"):
-            print("Quitting...")
-            print("have a nice day.")
+        if key == "q":
+            print("Bye!")
             exit()
+
+        
 
     prev_player_pos = player_ps
     prev_i = i
