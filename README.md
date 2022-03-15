@@ -1,20 +1,20 @@
 [![black](https://github.com/mendelsshop/sideway_space_invaders/actions/workflows/black.yml/badge.svg)](https://github.com/mendelsshop/sideway_space_invaders/actions/workflows/black.yml)
- ```
+<pre>
     _____ _     _                                                      
    /  ___(_)   | |                                                     
    \ `--. _  __| | _____      ____ _ _   _                             
     `--. | |/ _` |/ _ \ \ /\ / / _` | | | |                            
    /\__/ | | (_| |  __/\ V  V | (_| | |_| |                            
- _______/|_|\__,_|\___| \_/\_/______|\__, |             _               
+ _______/|_|\__,_|\___| \_/\_/______|\__, |            _               
 /  ___|                      |_   _| __/ |            | |              
 \ `--. _ __   __ _  ___ ___    | | _|___/   ____ _  __| | ___ _ __ ___ 
-  `--. | '_ \ / _` |/ __/ _ \   | || '_ \ \ / / _` |/ _` |/ _ | '__/ __|
+  `--. | '_ \ / _` |/ __/ _ \  | || '_ \ \ / / _` |/ _` |/ _ | '__/ __|
 /\__/ | |_) | (_| | (_|  __/  _| || | | \ V | (_| | (_| |  __| |  \__ \
 \____/| .__/ \__,_|\___\___|  \___|_| |_|\_/ \__,_|\__,_|\___|_|  |___/
-       | |                                                              
-       |_|                                                           
- ```                              
-                                                         
+       | |  
+       |_|        By: <a href="https://github.com/mendelsshop/">@mendelsshop</a>                                              
+</pre>                          
+                                                       
 ## How to play:
 Use the up and down arrows to move the O (space ship).
 If you don't move the spaceship it will be moved randomly on the y axis.
