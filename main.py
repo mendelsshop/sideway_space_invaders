@@ -1,10 +1,12 @@
 import os
 import random
 import time
+import sys
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))+ "rust\keyboard\build\lib.win-amd64-3.7")
 import keyboard
-
-
 clears = "clear" if os.name == "posix" else "cls"
+bullet_speed = 0.01 if os.name == "posix" else 0.000000000000000001
 # make a variable for the length and height of the board so we can change it for different levels
 # move most of the from here to somewhere else in src/ to make more modular
 # make a function to display the board instead of doing it in three lines each time
@@ -75,6 +77,8 @@ for i in range(51):
         player_ps = random.randrange(5)
 
     if board["row" + str(player_ps + 1)][i] == "<":
+        board["row" + str(prev_player_pos + 1)][prev_i] = ""
+        board["row" + str(player_ps + 1)][i] = "⦓"
         print("-" * 51)
         for row in board:
             print("".join(board[row]))
@@ -115,11 +119,10 @@ for i in range(51):
                     board[rowss][bulet - 1] = " "
 
                 print("".join(board[rowss]))
-
                 last_elemnt = len(board[rowss])
 
             print("-" * 51)
-            time.sleep(0.1)
+            time.sleep(bullet_speed)
 
     else:
         print("-" * 51)
