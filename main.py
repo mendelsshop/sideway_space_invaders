@@ -148,7 +148,5 @@ for i in range(51):
             print("Bye!")
             exit()
 
-        
-
     prev_player_pos = player_ps
     prev_i = i
