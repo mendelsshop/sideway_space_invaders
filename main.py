@@ -138,10 +138,16 @@ for i in range(51):
     while time.time() - timer < 0.5:
         # if the 2 seconds have passed, quit the loop
         if keyboard.is_pressed("up"):
-            key_p = "up"
+            if key_p == "down":
+                key_p = "down"
+            else:
+                key_p = "up"
 
         elif keyboard.is_pressed("down"):
-            key_p = "down"
+            if key_p == "up":
+                key_p = "up"
+            else:
+                key_p = "down"
 
         if keyboard.is_pressed("space"):
             shoot = True

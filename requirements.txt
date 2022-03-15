@@ -1,1 +1,0 @@
-git+https://github.com//PyO3/setuptools-rust.git
