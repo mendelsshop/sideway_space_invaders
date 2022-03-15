@@ -8,6 +8,6 @@ name = "keyboard"
 crate-type = ["cdylib"]
 
 [dependencies]
-rustyline = "9.1.2"
+crossterm = "*"
 cpython = {version = "0.7", features = ["extension-module"]}
 
