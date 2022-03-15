@@ -10,8 +10,6 @@ clears = "clear" if os.name == "posix" else "cls"
 # make a function to display the board instead of doing it in three lines each time
 # change it from a dictionary of lists to a list of lists
 
-# open readme.md and convert to html
-
 
 def readme():
     with open("README.txt", "r") as f:
