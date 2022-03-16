@@ -110,7 +110,6 @@ for i in range(51):
         board[player_ps][i] = "⦓"
         print("-" * 51)
         for row in range(len_board):
-            board = clear_enemys(board, range(44, 51), enemy_pos)
             print("".join(board[row]))
         print("-" * 51)
         print("You lose!")
