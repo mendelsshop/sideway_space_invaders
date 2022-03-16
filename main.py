@@ -23,24 +23,27 @@ def clear(times):
 
 
 def create_board(x, y):
-    board = [
-        [" " for i in range(x)] for j in range(y)
-    ]
+    board = [[" " for i in range(x)] for j in range(y)]
     enemy_pos = []
     for enemy_y in range(y):
-        enemy_x = random.randrange(x-6, x)
+        enemy_x = random.randrange(x - 6, x)
         enemy_pos.append([enemy_x, enemy_y])
-    board = clear_enemys(board, range(44,51), enemy_pos)
+    board = clear_enemys(board, range(44, 51), enemy_pos)
     return [board, enemy_pos]
+
+
 def locate_min(list):
     smallest = min(list)
     return [index for index, element in enumerate(list) if smallest == element]
+
 
 def best_place(enemy_pos):
     ys = [0, 0, 0, 0, 0]
     for enemy in enemy_pos:
         ys[enemy[1]] += 1
     return random.choice(locate_min(ys))
+
+
 def clear_enemys(board, enemy_range, enemy_pos):
     for row in board:
         for enemy in enemy_range:
@@ -49,6 +52,8 @@ def clear_enemys(board, enemy_range, enemy_pos):
     for enemy in enemy_pos:
         board[enemy[1]][enemy[0]] = "<"
     return board
+
+
 def spawan_enemys(board, enemy_pos):
     for i in range(random.randrange(1, 3)):
         x = random.randrange(44, 51)
@@ -60,15 +65,13 @@ def spawan_enemys(board, enemy_pos):
                 y += 1
         enemy_pos.append([x, y])
     if len(enemy_pos) > 10:
-        while len(enemy_pos) > 5 :
+        while len(enemy_pos) > 5:
             enemy_pos.pop()
     if len(enemy_pos) < 5:
-        for i in range(5-len(enemy_pos)):
+        for i in range(5 - len(enemy_pos)):
             enemy_pos.append([random.randrange(44, 51), locate_min(enemy_pos)[0]])
-    board = clear_enemys(board, range(44,51), enemy_pos)
+    board = clear_enemys(board, range(44, 51), enemy_pos)
     return [board, enemy_pos]
-
-
 
 
 clear(0)
@@ -107,7 +110,7 @@ for i in range(51):
         board[player_ps][i] = "⦓"
         print("-" * 51)
         for row in range(len_board):
-            board = clear_enemys(board, range(44,51), enemy_pos)
+            board = clear_enemys(board, range(44, 51), enemy_pos)
             print("".join(board[row]))
         print("-" * 51)
         print("You lose!")
@@ -139,7 +142,7 @@ for i in range(51):
 
                 if bulet == 51 and board[rowss][bulet - 1] == "-":
                     board[rowss][bulet - 1] = " "
-                board = clear_enemys(board, range(44,51), enemy_pos)
+                board = clear_enemys(board, range(44, 51), enemy_pos)
                 print("".join(board[rowss]))
                 last_elemnt = len(board[rowss])
 
@@ -149,7 +152,7 @@ for i in range(51):
     else:
         print("-" * 51)
         for rows in range(len_board):
-            board = clear_enemys(board, range(44,51), enemy_pos)
+            board = clear_enemys(board, range(44, 51), enemy_pos)
             print("".join(board[rows]))
         print("-" * 51)
 
