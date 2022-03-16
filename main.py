@@ -55,7 +55,7 @@ def clear_enemys(board, enemy_range, enemy_pos):
 
 
 def spawan_enemys(board, enemy_pos):
-    for i in range(random.randrange(1, 3)):
+    for i in range(random.randrange(0, 3)):
         x = random.randrange(44, 51)
         y = best_place(enemy_pos)
         if board[y][x] == "<":
@@ -65,11 +65,11 @@ def spawan_enemys(board, enemy_pos):
                 y += 1
         enemy_pos.append([x, y])
     if len(enemy_pos) > 10:
-        while len(enemy_pos) > 5:
-            enemy_pos.pop()
+        while len(enemy_pos) > 7:
+            enemy_pos.pop(len(enemy_pos) - 1)
     if len(enemy_pos) < 5:
         for i in range(5 - len(enemy_pos)):
-            enemy_pos.append([random.randrange(44, 51), locate_min(enemy_pos)[0]])
+            enemy_pos.append([random.randrange(44, 51), best_place(enemy_pos)])
     board = clear_enemys(board, range(44, 51), enemy_pos)
     return [board, enemy_pos]
 
