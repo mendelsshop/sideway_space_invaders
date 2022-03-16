@@ -14,7 +14,7 @@ bullet_speed = 0.01 if os.name == "posix" else 0.000000000000000001
 
 def readme():
     with open("README.txt", "r") as f:
-        return f.read().format('⦓')
+        return f.read().format("⦓")
 
 
 def clear(times):
