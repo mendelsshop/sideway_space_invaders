@@ -5,6 +5,7 @@ import sys
 import keyboard
 z=9
 z=''
+y='fix this'
 
 clears = "clear" if os.name == "posix" else "cls"
 bullet_speed = 0.01 if os.name == "posix" else 0.000000000000000001
