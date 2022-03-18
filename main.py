@@ -3,7 +3,7 @@ import random
 import time
 import sys
 import keyboard
-
+c = ""
 clears = "clear" if os.name == "posix" else "cls"
 bullet_speed = 0.01 if os.name == "posix" else 0.000000000000000001
 # make a variable for the length and height of the board so we can change it for different levels
