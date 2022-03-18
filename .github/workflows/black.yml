@@ -31,6 +31,7 @@ jobs:
     - name: Commit files  # transfer the new html files back into the repository
       run: |
         git config --local user.name  ${{ github.actor }}
+        git checkout -b ${GITHUB_HEAD_REF-${GITHUB_REF##*/}}
         git add .
         git commit --allow-empty -m "${{ github.event.commits[0].message }} - formmated with black"
     - name: Push changes  # push the output folder to your repo
