@@ -48,6 +48,4 @@ jobs:
         # The following variables are available to the workflow
         # Messages:
         # - "${{ github.event.commits[0].message }} - formmated with black"
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        force: true
+
