@@ -37,8 +37,8 @@ def locate_min(list):
     return [index for index, element in enumerate(list) if smallest == element]
 
 
-def best_place(enemy_pos, width):
-    ys = [0 for i in range(width)]
+def best_place(enemy_pos, height):
+    ys = [0 for i in range(height)]
     for enemy in enemy_pos:
         ys[enemy[1]] += 1
     return random.choice(locate_min(ys))
@@ -54,10 +54,10 @@ def clear_enemys(board, enemy_range, enemy_pos):
     return board
 
 
-def spawan_enemys(board, enemy_pos, width):
+def spawan_enemys(board, enemy_pos, width, height):
     for i in range(random.randrange(0, 3)):
-        x = random.randrange(44, width)
-        y = best_place(enemy_pos, width)
+        x = random.randrange(width-6, width)
+        y = best_place(enemy_pos, height)
         # could probaly do this by checking if coord is in enemy_pos
         if board[y][x] == "<":
             if y == 4:
@@ -68,12 +68,12 @@ def spawan_enemys(board, enemy_pos, width):
     if len(enemy_pos) > 10:
         while len(enemy_pos) > 7:
             enemy_pos.pop(len(enemy_pos) - 1)
-    if len(enemy_pos) < 5:
-        for i in range(5 - len(enemy_pos)):
+    if len(enemy_pos) < height:
+        for i in range(height - len(enemy_pos)):
             enemy_pos.append(
-                [random.randrange(44, width), best_place(enemy_pos, width)]
+                [random.randrange(width-6, width), best_place(enemy_pos, height)]
             )
-    board = clear_enemys(board, range(44, width), enemy_pos)
+    board = clear_enemys(board, range(width-6, width), enemy_pos)
     return [board, enemy_pos]
 
 
@@ -82,14 +82,17 @@ def configure_game():
     width = int(input("How wide do you want the board to be? "))
     max_enemys = int(input("How many enemys at most do you want on the board? "))
     min_enemys = int(input("How many enemys at least do you want on the board? "))
-    return [height, width, max_enemys, min_enemys]
+    enemy_range = int(input("Length of the enemy range? "))
+    enemy_range = width - enemy_range
+    return [height, width, max_enemys, min_enemys, enemy_range]
 
 
 def main():
     height = 5
-    width = 5
+    width = 51
     max_enemys = 10
     min_enemys = 5
+    enemy_range = width - 6
     clear(0)
     print(readme())
     print("press enter to start, q to quit, or c to configure the game")
@@ -101,10 +104,10 @@ def main():
             exit()
         elif key == "c":
             clear(0)
-            height, width, max_enemys, min_enemys = configure_game()
+            height, width, max_enemys, min_enemys, enemy_range = configure_game()
             break
     key_p = ""
-    player_ps = random.randrange(5)
+    player_ps = random.randrange(height)
     shoot = False
     prev_player_pos = None
     board, enemy_pos = create_board(width, height, min_enemys)
@@ -121,7 +124,7 @@ def main():
             player_ps += 1
 
         else:
-            player_ps = random.randrange(5)
+            player_ps = random.randrange(height)
 
         if board[player_ps][i] == "<":
             board[prev_player_pos][prev_i] = ""
@@ -150,7 +153,7 @@ def main():
                         # check if the current bulet position is the as "<"
                         if board[rowss][bulet] == "<":
                             enemy_pos.remove([bulet, rowss])
-                            board, enemy_pos = spawan_enemys(board, enemy_pos, width)
+                            board, enemy_pos = spawan_enemys(board, enemy_pos, width, height)
                         board[rowss][bulet] = "-"
                         if prev_b != 0:
                             board[rowss][prev_b] = " "
@@ -159,7 +162,7 @@ def main():
 
                     if bulet == width and board[rowss][bulet - 1] == "-":
                         board[rowss][bulet - 1] = " "
-                    board = clear_enemys(board, range(44, width), enemy_pos)
+                    board = clear_enemys(board, range(width-6, width), enemy_pos)
                     print("".join(board[rowss]))
                     last_elemnt = len(board[rowss])
 
@@ -169,7 +172,7 @@ def main():
         else:
             print("-" * width)
             for rows in range(len_board):
-                board = clear_enemys(board, range(44, width), enemy_pos)
+                board = clear_enemys(board, range(width-6, width), enemy_pos)
                 print("".join(board[rows]))
             print("-" * width)
 
