@@ -28,18 +28,26 @@ jobs:
         pip install black codespell
     - name: Check with black
       run: black --preview .
-    - name: Commit files  # transfer the new html files back into the repository
-      env:
-        BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
+    - name: Commit files  
+
       run: |
         git config --local user.name  ${{ github.actor }}
   
         git add .
         git commit --allow-empty -m "${{ github.event.commits[0].message }} - formmated with black"
     - name: Push changes  # push the output folder to your repo
-      env:
-        BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
-      uses: ad-m/github-push-action@master
+      
+      uses: actions/github-actions@v2
+      with:
+        token: ${{ github.token }}
+        owner: ${{ github.actor }}
+        repo: ${{ github.repo.name }}
+        event: push
+        branch: ${{ github.ref.split('/')[2] }}
+        force: true
+        # The following variables are available to the workflow
+        # Messages:
+        # - "${{ github.event.commits[0].message }} - formmated with black"
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         force: true
