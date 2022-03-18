@@ -43,7 +43,7 @@ jobs:
         owner: ${{ github.actor }}
         repo: ${{ github.repo.name }}
         event: push
-        branch: ${{ github.ref.split('/')[2] }}
+        branch: ${{  github.head_ref || github.ref_name }}
         force: true
         # The following variables are available to the workflow
         # Messages:
