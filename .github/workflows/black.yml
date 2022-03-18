@@ -37,14 +37,9 @@ jobs:
         git commit --allow-empty -m "${{ github.event.commits[0].message }} - formmated with black"
     - name: Push changes  # push the output folder to your repo
       
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
-        token: ${{ github.token }}
-        owner: ${{ github.actor }}
-        repo: ${{ github.repo.name }}
-        event: push
-        branch: ${{  github.head_ref || github.ref_name }}
-        force: true
+        ref: ${{  github.head_ref || github.ref_name }}
         # The following variables are available to the workflow
         # Messages:
         # - "${{ github.event.commits[0].message }} - formmated with black"
