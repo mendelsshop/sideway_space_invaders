@@ -70,12 +70,9 @@ def spawan_enemys(board, enemy_pos, width):
             enemy_pos.pop(len(enemy_pos) - 1)
     if len(enemy_pos) < 5:
         for i in range(5 - len(enemy_pos)):
-            enemy_pos.append(
-                [random.randrange(44, width), best_place(enemy_pos, width)]
-            )
+            enemy_pos.append([random.randrange(44, width), best_place(enemy_pos, width)])
     board = clear_enemys(board, range(44, width), enemy_pos)
     return [board, enemy_pos]
-
 
 def configure_game():
     height = int(input("How high do you want the board to be? "))
@@ -83,6 +80,7 @@ def configure_game():
     max_enemys = int(input("How many enemys at most do you want on the board? "))
     min_enemys = int(input("How many enemys at least do you want on the board? "))
     return [height, width, max_enemys, min_enemys]
+
 
 
 def main():
@@ -173,7 +171,7 @@ def main():
                 print("".join(board[rows]))
             print("-" * width)
 
-        if board[player_ps][width - 1] == "O":
+        if board[player_ps][width-1] == "O":
             print("You win!")
             break
 
@@ -194,7 +192,6 @@ def main():
 
         prev_player_pos = player_ps
         prev_i = i
-
 
 if __name__ == "__main__":
     main()
