@@ -37,7 +37,7 @@ jobs:
         git commit --allow-empty -m "${{ github.event.commits[0].message }} - formmated with black"
     - name: Push changes  # push the output folder to your repo
       
-      uses: actions/github-actions@v2
+      uses: actions/checkout@v2
       with:
         token: ${{ github.token }}
         owner: ${{ github.actor }}
