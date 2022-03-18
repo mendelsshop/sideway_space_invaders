@@ -56,7 +56,7 @@ def clear_enemys(board, enemy_range, enemy_pos):
 
 def spawan_enemys(board, enemy_pos, width, height):
     for i in range(random.randrange(0, 3)):
-        x = random.randrange(width-6, width)
+        x = random.randrange(width - 6, width)
         y = best_place(enemy_pos, height)
         # could probaly do this by checking if coord is in enemy_pos
         if board[y][x] == "<":
@@ -71,9 +71,9 @@ def spawan_enemys(board, enemy_pos, width, height):
     if len(enemy_pos) < height:
         for i in range(height - len(enemy_pos)):
             enemy_pos.append(
-                [random.randrange(width-6, width), best_place(enemy_pos, height)]
+                [random.randrange(width - 6, width), best_place(enemy_pos, height)]
             )
-    board = clear_enemys(board, range(width-6, width), enemy_pos)
+    board = clear_enemys(board, range(width - 6, width), enemy_pos)
     return [board, enemy_pos]
 
 
@@ -153,7 +153,9 @@ def main():
                         # check if the current bulet position is the as "<"
                         if board[rowss][bulet] == "<":
                             enemy_pos.remove([bulet, rowss])
-                            board, enemy_pos = spawan_enemys(board, enemy_pos, width, height)
+                            board, enemy_pos = spawan_enemys(
+                                board, enemy_pos, width, height
+                            )
                         board[rowss][bulet] = "-"
                         if prev_b != 0:
                             board[rowss][prev_b] = " "
@@ -162,7 +164,7 @@ def main():
 
                     if bulet == width and board[rowss][bulet - 1] == "-":
                         board[rowss][bulet - 1] = " "
-                    board = clear_enemys(board, range(width-6, width), enemy_pos)
+                    board = clear_enemys(board, range(width - 6, width), enemy_pos)
                     print("".join(board[rowss]))
                     last_elemnt = len(board[rowss])
 
@@ -172,7 +174,7 @@ def main():
         else:
             print("-" * width)
             for rows in range(len_board):
-                board = clear_enemys(board, range(width-6, width), enemy_pos)
+                board = clear_enemys(board, range(width - 6, width), enemy_pos)
                 print("".join(board[rows]))
             print("-" * width)
 
