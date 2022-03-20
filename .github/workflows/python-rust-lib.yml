@@ -20,8 +20,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-    build:
-      defaults:
+  build:
+    defaults:
       run:
         working-directory: ./rust/keyboard
     name: build py3.${{ matrix.python-version }} on ${{ matrix.platform || matrix.os }}
@@ -36,6 +36,7 @@ jobs:
         - macos
         - windows
         python-version:
+        - '6'
         - '7'
         - '8'
         - '9'
