@@ -61,6 +61,7 @@ jobs:
         - macos
         - windows
         python-version:
+        - '6'
         - '7'
         - '8'
         - '9'
@@ -140,6 +141,6 @@ jobs:
       uses: svenstaro/upload-release-action@e74ff71f7d8a4c4745b560a485cc5fdb9b5b999d
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        files: dist/*
+        file: dist/*
         tag: ${{ github.release.ref }}
         file_glob: true
