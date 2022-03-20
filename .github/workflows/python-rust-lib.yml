@@ -24,8 +24,34 @@ defaults:
     working-directory: ./rust/keyboard
 
 jobs:
-  build:
+  black:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
 
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install black codespell
+
+    - name: Check with black
+      run: black --preview .
+
+    - name: Commit files  
+      run: |
+        git config --local user.name  ${{ github.actor }}
+        git add .
+        git commit --allow-empty -m "${{ github.event.commits[0].message }} - formmated with black"
+        
+    - name: Push changes  # push the output folder to your repo
+      uses: ad-m/github-push-action@master
+      with: 
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: ${{  github.head_ref || github.ref_name }}
+        force: true
+  build:
     name: build py3.${{ matrix.python-version }} on ${{ matrix.platform || matrix.os }}
     needs:
       - test
@@ -38,7 +64,6 @@ jobs:
         - macos
         - windows
         python-version:
-        - '6'
         - '7'
         - '8'
         - '9'
@@ -111,6 +136,9 @@ jobs:
           rustup show
     - name: list dist files
       run: ${{ matrix.ls || 'ls -lh' }} dist/
+
+    - name: twine check
+      run: twine check dist/*
 
     - name: twine check
       run: twine check dist/*
