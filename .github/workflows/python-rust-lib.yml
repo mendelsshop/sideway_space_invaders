@@ -52,7 +52,7 @@ jobs:
         branch: ${{  github.head_ref || github.ref_name }}
         force: true
   build:
-    name: build py3.${{ matrix.python-version }} on ${{ matrix.platform || matrix.os }}
+    name: build py${{ matrix.python-version }} on ${{ matrix.platform || matrix.os }}
     strategy:
       fail-fast: false
       matrix:
@@ -97,7 +97,7 @@ jobs:
         python setup.py build
     - name: list dist files
       run: |
-        ${{ matrix.ls || 'ls -lh' }} lib/
+        ${{ matrix.ls || 'ls -lh' }} build/
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v3
