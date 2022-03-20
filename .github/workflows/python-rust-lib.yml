@@ -14,7 +14,7 @@ on:
     types: [published, released, prereleased]
 
 jobs:
-  build:
+    build:
       defaults:
       run:
         working-directory: ./rust/keyboard
