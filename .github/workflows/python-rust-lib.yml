@@ -144,3 +144,4 @@ jobs:
         file: dist/*
         tag: ${{ github.ref }}
         file_glob: true
+        
