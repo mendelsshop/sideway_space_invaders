@@ -133,11 +133,11 @@ jobs:
 
     - name: twine check
       run: twine check dist/*
-  - name: Upload Artifact
-    uses: actions/upload-artifact@v3
-    with:
-      name: dist
-      path: dist/
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: dist
+        path: dist/
 
     - name: upload to release
       if: github.event_name == 'release'
