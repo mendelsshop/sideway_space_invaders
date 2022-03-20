@@ -53,9 +53,6 @@ jobs:
         force: true
   build:
     name: build py3.${{ matrix.python-version }} on ${{ matrix.platform || matrix.os }}
-    needs:
-      - test
-      - lint
     strategy:
       fail-fast: false
       matrix:
