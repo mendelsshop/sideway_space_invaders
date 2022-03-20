@@ -8,31 +8,108 @@ name: python-rust-lib
 # https://github.com/samuelcolvin/rtoml/blob/e834a1ef2a51d4777a5bd99b03b671f719d217a7/.github/workflows/ci.yml#L60-L134
 
 # Controls when the workflow will run
-on:
-  # Triggers the workflow on push or pull request events but only for the main branch
-  push:
 
-  pull_request:
+on:
+  release:
+    types: [published, released, prereleased]
 
 jobs:
-  rust-to-python:
-    runs-on: ubuntu-latest
+  build:
+      defaults:
+      run:
+        working-directory: ./rust/keyboard
+    name: build py3.${{ matrix.python-version }} on ${{ matrix.platform || matrix.os }}
+    needs:
+      - test
+      - lint
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+        - ubuntu
+        - macos
+        - windows
+        python-version:
+        - '7'
+        - '8'
+        - '9'
+        - '10'
+        include:
+        - os: ubuntu
+          platform: linux
+        - os: windows
+          ls: dir
+
+    runs-on: ${{ format('{0}-latest', matrix.os) }}
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python
-      uses: actions/setup-python@v2
-    - name: Set up Rust
+
+    - name: set up python
+      uses: actions/setup-python@v1
+      with:
+        python-version: '3.8'
+
+    - name: set up rust
+      if: matrix.os != 'ubuntu'
       uses: actions-rs/toolchain@v1
       with:
-          profile: minimal
-          toolchain: stable
-          override: true
-    - name: Install dependencies
+        profile: minimal
+        toolchain: nightly
+        override: true
+
+    - name: install python dependencies
+      run: pip install -U setuptools wheel twine cibuildwheel
+
+    - name: build sdist
+      if: matrix.os == 'ubuntu' && matrix.python-version == '8'
       run: |
-        python -m pip install --upgrade pip
-        pip install setuptools_rust
-    - name: build binaries
-      run: |
-        cd rust
-        cd keyboard
-        python setup.py build
+        pip install -U setuptools-rust
+        python setup.py sdist
+    - name: build ${{ matrix.platform || matrix.os }} binaries
+      run: cibuildwheel --output-dir dist
+      env:
+        CIBW_BUILD: 'cp3${{ matrix.python-version }}-*'
+        CIBW_SKIP: '*-win32 *-musllinux_i686'
+        CIBW_PLATFORM: ${{ matrix.platform || matrix.os }}
+        CIBW_TEST_REQUIRES: 'pytest'
+        CIBW_TEST_COMMAND: 'pytest {project}/tests -s'
+        CIBW_ENVIRONMENT: 'PATH="$HOME/.cargo/bin:$PATH"'
+        CIBW_ENVIRONMENT_WINDOWS: 'PATH="$UserProfile\.cargo\bin;$PATH"'
+        CIBW_MANYLINUX_X86_64_IMAGE: 'manylinux2014'
+        CIBW_MANYLINUX_I686_IMAGE: 'manylinux2014'
+        CIBW_BEFORE_BUILD: >
+          pip install -U setuptools-rust &&
+          rustup default nightly &&
+          rustup show
+        CIBW_BEFORE_BUILD_LINUX: >
+          pip install -U setuptools-rust &&
+          curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain=nightly --profile=minimal -y &&
+          rustup show
+    - name: build windows 32bit binaries
+      if: matrix.os == 'windows'
+      run: cibuildwheel --output-dir dist
+      env:
+        CIBW_BUILD: 'cp3${{ matrix.python-version }}-win32'
+        CIBW_PLATFORM: windows
+        CIBW_TEST_REQUIRES: 'pytest'
+        CIBW_TEST_COMMAND: 'pytest {project}/tests -s'
+        CIBW_ENVIRONMENT: 'PATH="$UserProfile\.cargo\bin;$PATH"'
+        CIBW_BEFORE_BUILD: >
+          pip install -U setuptools-rust &&
+          rustup toolchain install nightly-i686-pc-windows-msvc &&
+          rustup default nightly-i686-pc-windows-msvc &&
+          rustup override set nightly-i686-pc-windows-msvc &&
+          rustup show
+    - name: list dist files
+      run: ${{ matrix.ls || 'ls -lh' }} dist/
+
+    - name: twine check
+      run: twine check dist/*
+    - name: upload to release
+      if: github.event_name == 'release'
+      uses: svenstaro/upload-release-action@e74ff71f7d8a4c4745b560a485cc5fdb9b5b999d
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        files: dist/*
+        tag: ${{ github.release.ref }}
+        file_glob: true
