@@ -61,11 +61,11 @@ jobs:
         - macos
         - windows
         python-version:
-        - '6'
-        - '7'
-        - '8'
-        - '9'
-        - '10'
+        # - '3.6'
+        - '3.7'
+        # - '3.8'
+        - '3.9'
+        # - '3.10'
         include:
         - os: ubuntu
           platform: linux
@@ -79,74 +79,38 @@ jobs:
     - name: set up python
       uses: actions/setup-python@v1
       with:
-        python-version: '3.8'
+        python-version: ${{ matrix.python-version }}
 
     - name: set up rust
-      if: matrix.os != 'ubuntu'
       uses: actions-rs/toolchain@v1
       with:
         profile: minimal
-        toolchain: nightly
+        toolchain: stable
         override: true
 
     - name: install python dependencies
-      run: pip install -U setuptools wheel twine cibuildwheel
+      run: pip install -U setuptools 
 
-    - name: build sdist
-      if: matrix.os == 'ubuntu' && matrix.python-version == '8'
+    - name: build lib
       run: |
         pip install -U setuptools-rust
-        python setup.py sdist
-    - name: build ${{ matrix.platform || matrix.os }} binaries
-      run: cibuildwheel --output-dir dist
-      env:
-        CIBW_BUILD: 'cp3${{ matrix.python-version }}-*'
-        CIBW_SKIP: '*-win32 *-musllinux_i686'
-        CIBW_PLATFORM: ${{ matrix.platform || matrix.os }}
-        CIBW_ENVIRONMENT: 'PATH="$HOME/.cargo/bin:$PATH"'
-        CIBW_ENVIRONMENT_WINDOWS: 'PATH="$UserProfile\.cargo\bin;$PATH"'
-        CIBW_MANYLINUX_X86_64_IMAGE: 'manylinux2014'
-        CIBW_MANYLINUX_I686_IMAGE: 'manylinux2014'
-        CIBW_BEFORE_BUILD: >
-          pip install -U setuptools-rust &&
-          rustup default nightly &&
-          rustup show
-        CIBW_BEFORE_BUILD_LINUX: >
-          pip install -U setuptools-rust &&
-          curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain=nightly --profile=minimal -y &&
-          rustup show
-    - name: build windows 32bit binaries
-      if: matrix.os == 'windows'
-      run: cibuildwheel --output-dir dist
-      env:
-        CIBW_BUILD: 'cp3${{ matrix.python-version }}-win32'
-        CIBW_PLATFORM: windows
-        CIBW_ENVIRONMENT: 'PATH="$UserProfile\.cargo\bin;$PATH"'
-        CIBW_BEFORE_BUILD: >
-          pip install -U setuptools-rust &&
-          rustup toolchain install nightly-i686-pc-windows-msvc &&
-          rustup default nightly-i686-pc-windows-msvc &&
-          rustup override set nightly-i686-pc-windows-msvc &&
-          rustup show
+        python setup.py build
     - name: list dist files
       run: |
-        ${{ matrix.ls || 'ls -lh' }} dist
+        ${{ matrix.ls || 'ls -lh' }} lib/
 
-
-    - name: twine check
-      run: twine check dist/*
     - name: Upload Artifact
       uses: actions/upload-artifact@v3
       with:
         name: dist
-        path: rust/keyboard/dist/
+        path: rust/keyboard/build/lib.*/
 
     - name: upload to release
       if: github.event_name == 'release'
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: dist/*.whl
+        file: dist/*
         tag: ${{ github.ref }}
         file_glob: true
 
