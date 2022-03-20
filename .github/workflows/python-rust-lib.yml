@@ -142,5 +142,5 @@ jobs:
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: dist/*
-        tag: ${{ github.release.ref }}
+        tag: ${{ github.ref }}
         file_glob: true
