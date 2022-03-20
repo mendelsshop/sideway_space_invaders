@@ -20,7 +20,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
+    build:
       defaults:
       run:
         working-directory: ./rust/keyboard
