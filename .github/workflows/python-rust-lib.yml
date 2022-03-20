@@ -129,7 +129,9 @@ jobs:
           rustup override set nightly-i686-pc-windows-msvc &&
           rustup show
     - name: list dist files
-      run: ${{ matrix.ls || 'ls -lh' }} dist/
+      run: |
+        ${{ matrix.ls || 'ls -lh' }} dist
+
 
     - name: twine check
       run: twine check dist/*
@@ -137,7 +139,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: dist
-        path: dist/
+        path: rust/keyboard/dist/
 
     - name: upload to release
       if: github.event_name == 'release'
