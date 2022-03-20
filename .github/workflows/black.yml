@@ -26,7 +26,6 @@ jobs:
     - name: Commit files  
       run: |
         git config --local user.name  ${{ github.actor }}
-        git checkout -b ${GITHUB_HEAD_REF-${GITHUB_REF##*/}}
         git add .
         git commit --allow-empty -m "${{ github.event.commits[0].message }} - formmated with black"
         
