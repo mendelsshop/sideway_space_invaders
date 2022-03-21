@@ -54,11 +54,12 @@ jobs:
         name: linux
         path: rust/keyboard/build/lib.linux-x86_64-${{ matrix.python-version }}/keyboard.cpython-*-x86_64-linux-gnu.so
     - name: upload to release
-      uses: softprops/action-gh-release@v1
+      uses: svenstaro/upload-release-action@v2
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        files: rust/keyboard/build/lib.linux-x86_64-${{ matrix.python-version }}/keyboard.cpython-*-x86_64-linux-gnu.so
-        tag_name: ${{ github.ref }}
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: rust/keyboard/build/lib.linux-x86_64-${{ matrix.python-version }}/keyboard.cpython-*-x86_64-linux-gnu.so
+        tag: ${{ github.ref }}
+        file_glob: true
 
   macOS:
     strategy:
@@ -100,11 +101,12 @@ jobs:
         path: rust/keyboard/build/lib.macosx-*.*-x86_64-${{ matrix.python-version }}/keyboard.cpython-*-darwin.so
 
     - name: upload to release
-      uses: softprops/action-gh-release@v1
+      uses: svenstaro/upload-release-action@v2
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        files: rust/keyboard/build/lib.macosx-*.*-x86_64-${{ matrix.python-version }}/keyboard.cpython-*-darwin.so
-        tag_name: ${{ github.ref }}
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: rust/keyboard/build/lib.macosx-*.*-x86_64-${{ matrix.python-version }}/keyboard.cpython-*-darwin.so
+        tag: ${{ github.ref }}
+        file_glob: true
   Windows:
     runs-on: windows-latest
     strategy:
@@ -145,8 +147,9 @@ jobs:
         name: windows
         path: rust\keyboard\build\lib.win-amd64-${{ matrix.python-version }}\keyboard.cp*-win_amd64.pyd
     - name: upload to release
-      uses: softprops/action-gh-release@v1
+      uses: svenstaro/upload-release-action@v2
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        files: rust/keyboard/build/lib.win-amd64-${{ matrix.python-version }}/*.pyd
-        tag_name: ${{ github.ref }}
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: rust/keyboard/build/lib.win-amd64-${{ matrix.python-version }}/*.pyd
+        tag: ${{ github.ref }}
+        file_glob: true
