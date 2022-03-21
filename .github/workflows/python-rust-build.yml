@@ -52,12 +52,12 @@ jobs:
       with:
         name: linux
         path: rust/keyboard/build/lib.linux-x86_64-${{ matrix.python-version }}/keyboard.cpython-*-x86_64-linux-gnu.so
-    - name: set value of path
-      run: |
-        echo "path=${ls build/}" >> GITHUB_ENV
-    - name: set value of file
-      run: |
-        echo "file=${ls build/path}" >> GITHUB_ENV
+    # - name: set value of path
+    #   run: |
+    #     echo "path=${ls build/}" >> GITHUB_ENV
+    # - name: set value of file
+    #   run: |
+    #     echo "file=${ls build/path}" >> GITHUB_ENV
     # - name: upload to release
     #   if: github.event_name == 'release'
     #   uses: svenstaro/upload-release-action@v2
@@ -103,12 +103,12 @@ jobs:
       with:
         name: macos
         path: rust/keyboard/build/lib.macosx-*.*-x86_64-${{ matrix.python-version }}/keyboard.cpython-*-darwin.so
-    - name: set value of path
-      run: |
-        echo "path=${ls build/}" >> GITHUB_ENV
-    - name: set value of file
-      run: |
-        echo "file=${ls build/path}" >> GITHUB_ENV
+    # - name: set value of path
+    #   run: |
+    #     echo "PATH=${ls build/}" >> GITHUB_ENV
+    # - name: set value of file
+    #   run: |
+    #     echo "PATH=${ls build/path}" >> GITHUB_ENV
     # - name: upload to release
     #   if: github.event_name == 'release'
     #   uses: svenstaro/upload-release-action@v2
@@ -135,9 +135,9 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: make variabe py version with no dots
       run: |
-        RAW_TOXENV="py${{ matrix.python }}-django${{ matrix.django }}"
+        RAW_TOXENV="py${{ matrix.python }}"
         TOXENV=$(echo $RAW_TOXENV | sed 's/\.//')
-        echo "py_v=$TOXENV" >> $GITHUB_ENV
+        echo "PYV=$TOXENV" >> $GITHUB_ENV
     - name: install rust
       uses: actions-rs/toolchain@v1
       with:
