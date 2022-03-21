@@ -62,8 +62,8 @@ jobs:
     - name: upload to release
       uses: softprops/action-gh-release@v1
       with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: build/lib.linux-x86_64-${{ matrix.python-version }}/keyboard.cpython-*-x86_64-linux-gnu.so
+        token: ${{ secrets.GITHUB_TOKEN }}
+        files: build/lib.linux-x86_64-${{ matrix.python-version }}/keyboard.cpython-*-x86_64-linux-gnu.so
         tag_name: test1
 
   macOS:
@@ -113,8 +113,8 @@ jobs:
     - name: upload to release
       uses: softprops/action-gh-release@v1
       with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: build/lib.macosx-*.*-x86_64-${{ matrix.python-version }}/keyboard.cpython-*-darwin.so
+        token: ${{ secrets.GITHUB_TOKEN }}
+        files: build/lib.macosx-*.*-x86_64-${{ matrix.python-version }}/keyboard.cpython-*-darwin.so
         tag_name: test1
   Windows:
     runs-on: windows-latest
