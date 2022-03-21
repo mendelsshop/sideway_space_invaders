@@ -142,11 +142,11 @@ jobs:
       with:
         name: windows
         path: rust\keyboard\build\lib.win-amd64-${{ matrix.python-version }}\keyboard.cp*-win_amd64.pyd
-    # - name: upload to release
-    #   if: github.event_name == 'release'
-    #   uses: svenstaro/upload-release-action@v2
-    #   with:
-    #     repo_token: ${{ secrets.GITHUB_TOKEN }}
-    #     file:
-    #     tag: ${{ github.ref }}
-    #     file_glob: true
+    - name: upload to release
+      if: github.event_name == 'release'
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: build\lib.win-amd64-${{ matrix.python-version }}\keyboard.cp*-win_amd64.pyd
+        tag: ${{ github.ref }}
+        file_glob: true
