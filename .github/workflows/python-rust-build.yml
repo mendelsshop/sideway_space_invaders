@@ -1,4 +1,4 @@
-name: python-rust-lib_2.0.0 
+name: python-rust-build
 
 on:
   release:
