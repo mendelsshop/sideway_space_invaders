@@ -63,7 +63,7 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        files: build/lib.linux-x86_64-${{ matrix.python-version }}/keyboard.cpython-*-x86_64-linux-gnu.so
+        files: rust/keyboard/build/lib.linux-x86_64-${{ matrix.python-version }}/keyboard.cpython-*-x86_64-linux-gnu.so
         tag_name: test1
 
   macOS:
@@ -114,7 +114,7 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        files: build/lib.macosx-*.*-x86_64-${{ matrix.python-version }}/keyboard.cpython-*-darwin.so
+        files: rust/keyboard/build/lib.macosx-*.*-x86_64-${{ matrix.python-version }}/keyboard.cpython-*-darwin.so
         tag_name: test1
   Windows:
     runs-on: windows-latest
@@ -159,5 +159,5 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        files: build/lib.win-amd64-${{ matrix.python-version }}/*.pyd
+        files: rust/keyboard/build/lib.win-amd64-${{ matrix.python-version }}/*.pyd
         tag_name: test1
