@@ -5,6 +5,7 @@ on:
     types: [published, released, prereleased]
     branches:
       - main
+    workflow_dispatch:
 
 defaults:
   run:
