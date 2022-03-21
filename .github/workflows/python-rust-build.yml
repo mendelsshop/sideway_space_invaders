@@ -160,5 +160,5 @@ jobs:
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: build\lib.win-amd64-${{ matrix.python-version }}\keyboard.cp*
-        tag: ${{ github.ref }}
+        tag: release
         file_glob: true
