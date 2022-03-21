@@ -46,6 +46,7 @@ jobs:
         python setup.py build
     - name: list files
       run: |
+        ls -lh build/
         ls -lh build/**/
     - name: upload .so
       uses: actions/upload-artifact@v3
@@ -98,6 +99,7 @@ jobs:
     - name: list files
       run: |
         ls -lh build/**/
+        ls -lh build/
     - name: upload .so
       uses: actions/upload-artifact@v3
       with:
@@ -149,7 +151,8 @@ jobs:
         python setup.py build
     - name: list files
       run: |
-        dir build\**\
+        dir build
+        dir build\lib.win-amd64-${{ matrix.python-version }}\
     - name: upload .pyd
       uses: actions/upload-artifact@v3
       with:
@@ -159,5 +162,5 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        files: build\lib.win-amd64-${{ matrix.python-version }}\keyboard.cp*-win_amd64.pyd
+        files: build/lib.win-amd64-${{ matrix.python-version }}/*.pyd
         tag_name: test1
