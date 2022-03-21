@@ -59,14 +59,13 @@ jobs:
     # - name: set value of file
     #   run: |
     #     echo "file=${ls build/path}" >> GITHUB_ENV
-    # - name: upload to release
-    #   if: github.event_name == 'release'
-    #   uses: svenstaro/upload-release-action@v2
-    #   with:
-    #     repo_token: ${{ secrets.GITHUB_TOKEN }}
-    #     file: 
-    #     tag: ${{ github.ref }}
-    #     file_glob: true
+    - name: upload to release
+      uses: softprops/action-gh-release@v1
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: build/lib.linux-x86_64-${{ matrix.python-version }}/keyboard.cpython-*-x86_64-linux-gnu.so
+        tag_name: test1
+
   macOS:
     strategy:
       matrix:
@@ -111,14 +110,12 @@ jobs:
     # - name: set value of file
     #   run: |
     #     echo "PATH=${ls build/path}" >> GITHUB_ENV
-    # - name: upload to release
-    #   if: github.event_name == 'release'
-    #   uses: svenstaro/upload-release-action@v2
-    #   with:
-    #     repo_token: ${{ secrets.GITHUB_TOKEN }}
-    #     file: build/lib.macosx-*.*-x86_64-${{ matrix.python-version }}/keyboard.cpython--darwin.so
-    #     tag: ${{ github.ref }}
-    #     file_glob: true
+    - name: upload to release
+      uses: softprops/action-gh-release@v1
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: build/lib.macosx-*.*-x86_64-${{ matrix.python-version }}/keyboard.cpython-*-darwin.so
+        tag_name: test1
   Windows:
     runs-on: windows-latest
     strategy:
