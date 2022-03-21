@@ -160,4 +160,4 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         files: build\lib.win-amd64-${{ matrix.python-version }}\keyboard.cp*-win_amd64.pyd
-        tag_name: test
+        tag_name: test1
