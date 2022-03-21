@@ -52,6 +52,12 @@ jobs:
       with:
         name: linux
         path: rust/keyboard/build/lib.linux-x86_64-${{ matrix.python-version }}/keyboard.cpython-*-x86_64-linux-gnu.so
+    - name: set value of path
+      run: |
+        echo "path=${ls build/}" >> GITHUB_ENV
+    - name: set value of file
+      run: |
+        echo "file=${ls build/path}" >> GITHUB_ENV
     # - name: upload to release
     #   if: github.event_name == 'release'
     #   uses: svenstaro/upload-release-action@v2
@@ -97,12 +103,18 @@ jobs:
       with:
         name: macos
         path: rust/keyboard/build/lib.macosx-*.*-x86_64-${{ matrix.python-version }}/keyboard.cpython-*-darwin.so
+    - name: set value of path
+      run: |
+        echo "path=${ls build/}" >> GITHUB_ENV
+    - name: set value of file
+      run: |
+        echo "file=${ls build/path}" >> GITHUB_ENV
     # - name: upload to release
     #   if: github.event_name == 'release'
     #   uses: svenstaro/upload-release-action@v2
     #   with:
     #     repo_token: ${{ secrets.GITHUB_TOKEN }}
-    #     file:
+    #     file: build/lib.macosx-*.*-x86_64-${{ matrix.python-version }}/keyboard.cpython--darwin.so
     #     tag: ${{ github.ref }}
     #     file_glob: true
   Windows:
@@ -115,6 +127,7 @@ jobs:
         # - '3.8'
         - '3.9'
         # - '3.10'
+        python-version-no-dots: ${{ matrix.python-version | replace('.', '') }}
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python
@@ -147,6 +160,6 @@ jobs:
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: build\lib.win-amd64-${{ matrix.python-version }}\keyboard.cp*-win_amd64.pyd
+        file: build\lib.win-amd64-${{ matrix.python-version }}\keyboard.cp${{ matrix.python-version-no-dots }}-win_amd64.pyd
         tag: ${{ github.ref }}
         file_glob: true
