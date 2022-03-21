@@ -15,10 +15,6 @@ on:
     branches:
       - main
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref_name }}-${{ github.event.pull_request.number || github.sha }}
-  cancel-in-progress: true
-
 defaults:
   run:
     working-directory: ./rust/keyboard
@@ -105,13 +101,12 @@ jobs:
         name: dist
         path: rust/keyboard/build/lib.*/
 
-    - name: upload to release
-      if: github.event_name == 'release'
-      uses: svenstaro/upload-release-action@v2
-      with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: dist/**/*
-  
-        tag: ${{ github.ref }}
-        file_glob: true
+  upload-to-release:
+    if: github.event_name == 'release'
+    uses: svenstaro/upload-release-action@v2
+    with:
+      repo_token: ${{ secrets.GITHUB_TOKEN }}
+      file: dist/lib.*/keyboard.*
+      tag: ${{ github.ref }}
+      file_glob: true
 
