@@ -127,7 +127,12 @@ jobs:
         # - '3.8'
         - '3.9'
         # - '3.10'
-        python-version-no-dots: ${{ matrix.python-version | replace('.', '') }}
+        python-version-no-dots:
+        # - '36'
+        - '37'
+        # - '38'
+        - '39'
+        # - '310'
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python
