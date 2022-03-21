@@ -53,18 +53,12 @@ jobs:
       with:
         name: linux
         path: rust/keyboard/build/lib.linux-x86_64-${{ matrix.python-version }}/keyboard.cpython-*-x86_64-linux-gnu.so
-    # - name: set value of path
-    #   run: |
-    #     echo "path=${ls build/}" >> GITHUB_ENV
-    # - name: set value of file
-    #   run: |
-    #     echo "file=${ls build/path}" >> GITHUB_ENV
     - name: upload to release
       uses: softprops/action-gh-release@v1
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         files: rust/keyboard/build/lib.linux-x86_64-${{ matrix.python-version }}/keyboard.cpython-*-x86_64-linux-gnu.so
-        tag_name: test1
+        tag_name: ${{ github.ref }}
 
   macOS:
     strategy:
@@ -104,18 +98,13 @@ jobs:
       with:
         name: macos
         path: rust/keyboard/build/lib.macosx-*.*-x86_64-${{ matrix.python-version }}/keyboard.cpython-*-darwin.so
-    # - name: set value of path
-    #   run: |
-    #     echo "PATH=${ls build/}" >> GITHUB_ENV
-    # - name: set value of file
-    #   run: |
-    #     echo "PATH=${ls build/path}" >> GITHUB_ENV
+
     - name: upload to release
       uses: softprops/action-gh-release@v1
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         files: rust/keyboard/build/lib.macosx-*.*-x86_64-${{ matrix.python-version }}/keyboard.cpython-*-darwin.so
-        tag_name: test1
+        tag_name: ${{ github.ref }}
   Windows:
     runs-on: windows-latest
     strategy:
@@ -160,4 +149,4 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         files: rust/keyboard/build/lib.win-amd64-${{ matrix.python-version }}/*.pyd
-        tag_name: test1
+        tag_name: ${{ github.ref }}
