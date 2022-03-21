@@ -159,6 +159,6 @@ jobs:
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: build\lib.win-amd64-${{ matrix.python-version }}\*win_amd64.pyd
+        file: build\lib.win-amd64-${{ matrix.python-version }}\keyboard.cp*
         tag: ${{ github.ref }}
         file_glob: true
