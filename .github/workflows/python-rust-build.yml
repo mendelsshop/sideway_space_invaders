@@ -137,7 +137,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: windows
-        path: rust\keyboard\build\lib.win-amd64${{ matrix.python-version }}\keyboard.cp*-win_amd64.pyd
+        path: rust\keyboard\build\lib.win-amd64-${{ matrix.python-version }}\keyboard.cp*-win_amd64.pyd
     # - name: upload to release
     #   if: github.event_name == 'release'
     #   uses: svenstaro/upload-release-action@v2
