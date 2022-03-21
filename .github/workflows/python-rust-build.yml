@@ -135,7 +135,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: make variabe py version with no dots
       run: |
-        RAW_TOXENV="py${{ matrix.python }}"
+        RAW_TOXENV="${{ matrix.python }}"
         TOXENV=$(echo $RAW_TOXENV | sed 's/\.//')
         echo "PYV=$TOXENV" >> $GITHUB_ENV
     - name: install rust
