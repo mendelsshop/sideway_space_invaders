@@ -22,10 +22,10 @@ def clear(times):
     os.system(clears)
 
 
-def create_board(x, y, max_enemys, enemy_range , min_enemys):
+def create_board(x, y, max_enemys, enemy_range, min_enemys):
     board = [[" " for i in range(x)] for j in range(+y)]
     enemy_pos = []
-    
+
     for enemy_y in range(random.randrange(min_enemys, max_enemys)):
         if enemy_y >= y:
             enemy_pos.append([random.randrange(enemy_range, x), random.randrange(0, y)])
@@ -33,7 +33,7 @@ def create_board(x, y, max_enemys, enemy_range , min_enemys):
         else:
             enemy_x = random.randrange(enemy_range, x)
         enemy_pos.append([enemy_x, enemy_y])
-    board = clear_enemys(board, range(enemy_range-1, x), enemy_pos)
+    board = clear_enemys(board, range(enemy_range - 1, x), enemy_pos)
     return [board, enemy_pos]
 
 
@@ -54,13 +54,22 @@ def clear_enemys(board, enemy_range, enemy_pos):
         for enemy in enemy_range:
             if row[enemy] == "<":
                 row[enemy] = " "
-    
+
     for enemy in enemy_pos:
         board[enemy[1]][enemy[0]] = "<"
     return board
 
 
-def spawan_enemys(board, enemy_pos, width, height, min_enemys, max_enemys, enemy_range, max_enemys_per_spawn):
+def spawan_enemys(
+    board,
+    enemy_pos,
+    width,
+    height,
+    min_enemys,
+    max_enemys,
+    enemy_range,
+    max_enemys_per_spawn,
+):
     for i in range(random.randrange(0, max_enemys_per_spawn)):
         x = random.randrange(enemy_range, width)
         y = best_place(enemy_pos, height)
@@ -90,10 +99,20 @@ def configure_game():
     max_enemys = int(input("How many enemys at most do you want on the board? "))
     min_enemys = int(input("How many enemys at least do you want on the board? "))
     enemy_range = int(input("Length of the enemy range? "))
-    max_enemys_per_spawn = int(input("How many enemys at most do you want to spawn at once? "))
+    max_enemys_per_spawn = int(
+        input("How many enemys at most do you want to spawn at once? ")
+    )
     lives = int(input("How many lives do you want to start with? "))
     enemy_range = width - enemy_range
-    return [height, width, max_enemys, min_enemys, enemy_range, max_enemys_per_spawn, lives]
+    return [
+        height,
+        width,
+        max_enemys,
+        min_enemys,
+        enemy_range,
+        max_enemys_per_spawn,
+        lives,
+    ]
 
 
 def main():
@@ -115,13 +134,21 @@ def main():
             exit()
         elif key == "c":
             clear(0)
-            height, width, max_enemys, min_enemys, enemy_range, max_enemys_per_spawn, lives = configure_game()
+            (
+                height,
+                width,
+                max_enemys,
+                min_enemys,
+                enemy_range,
+                max_enemys_per_spawn,
+                lives,
+            ) = configure_game()
             break
     key_p = ""
     player_ps = random.randrange(height)
     shoot = False
     prev_player_pos = None
-    board, enemy_pos = create_board(width, height, max_enemys, enemy_range, min_enemys) 
+    board, enemy_pos = create_board(width, height, max_enemys, enemy_range, min_enemys)
     len_board = len(board)
     # if the '-' collides with '<' then '<' is destroyed
     # if 'O' reaches the end of the board than you win the game
@@ -175,7 +202,14 @@ def main():
                         if board[rowss][bulet] == "<":
                             enemy_pos.remove([bulet, rowss])
                             board, enemy_pos = spawan_enemys(
-                                board, enemy_pos, width, height, min_enemys, max_enemys, enemy_range, max_enemys_per_spawn
+                                board,
+                                enemy_pos,
+                                width,
+                                height,
+                                min_enemys,
+                                max_enemys,
+                                enemy_range,
+                                max_enemys_per_spawn,
                             )
                         board[rowss][bulet] = "-"
                         if prev_b != 0:
