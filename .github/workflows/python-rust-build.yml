@@ -62,6 +62,8 @@ jobs:
         file_glob: true
 
   macOS:
+    # something about code signing because github action binaries not working on mac because of code signing
+    # search for setup.py macos code signing  
     strategy:
       matrix:
         python-version:
