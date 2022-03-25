@@ -44,12 +44,6 @@ fn is_pressed(py: Python) -> PyResult<String> {
             return Ok("q".to_string());
         },
         Some(KeyEvent {
-            code: KeyCode::Char('c'),
-            modifiers: KeyModifiers::NONE,
-        }) => {
-            return Ok("c".to_string());
-        },
-        Some(KeyEvent {
             code: KeyCode::Up,
             modifiers: KeyModifiers::NONE,
         }) => {
