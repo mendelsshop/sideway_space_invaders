@@ -60,13 +60,24 @@ fn is_pressed(py: Python) -> PyResult<String> {
             modifiers: KeyModifiers::NONE,
         }) => {
             return Ok("enter".to_string());
-
         },
         Some(KeyEvent {
             code: KeyCode::Char(' '),
             modifiers: KeyModifiers::NONE,
         }) => {
             return Ok("space".to_string());
+        },
+        Some(KeyEvent {
+            code: KeyCode::Char('l'),
+            modifiers: KeyModifiers::NONE,
+        }) => {
+            return Ok("l".to_string());
+        },
+        Some(KeyEvent {
+            code: KeyCode::Char('n'),
+            modifiers: KeyModifiers::NONE,
+        }) => {
+            return Ok("n".to_string());
         },
         _ => {
             return Ok("".to_string());

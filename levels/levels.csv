@@ -1,0 +1,2 @@
+name,height,width,max_enemys,min_enemys,enemy_range,max_enemys_per_spawn,lives
+Default,5,51,10,5,6,3,1

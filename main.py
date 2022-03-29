@@ -2,10 +2,15 @@ import os
 import random
 import time
 import sys
+import csv
 import keyboard
 
 clears = "clear" if os.name == "posix" else "cls"
 bullet_speed = 0.01 if os.name == "posix" else 0.000000000000000001
+sep = '/' if os.name == "posix" else '\\'
+
+path = os.path.dirname(os.path.abspath(__file__)).split(sep)
+
 # make a variable for the length and height of the board so we can change it for different levels
 # move most of the from here to somewhere else in src/ to make more modular
 # make a function to display the board instead of doing it in three lines each time
@@ -202,6 +207,88 @@ def configure_game():
     ]
 
 
+def level_list():
+    """
+    This function will return a list of all the levels
+    from the level file
+    """
+    level_list = []
+    with open(f"{sep.join(path)}{sep}levels{sep}levels.csv", "r") as level_file:
+        filereader = csv.DictReader(level_file)
+        for row in filereader:
+            level_list.append(str(row["name"]))
+    return level_list
+
+def name_exists(name):
+    """
+    This function will check if the name exists in the list of names.
+    It will take the name and check if the name is in the list of level names.
+    It will then return true if the name is in the list of level names and false if it is not.
+    """
+    if name in level_list():
+        return True
+    return False
+
+def configure_level():
+    """
+    This function will configure the game.
+    It will ask the user for the width and height of the board and the range of the enemies.
+    It will also ask the user for the min and max number of enemies and the max number of enemies per spawn.
+    It will then write to the level file the name, width, height, min_enemys, max_enemys, enemy_range, max_enemys_per_spawn
+    """
+    level_name = input("What do you want the level name to be? ")
+    while name_exists(level_name):
+        print("That level name already exists")
+        level_name = input("What do you want the level name to be? ")
+    while level_name in ["h", "b", "q"]:
+        print("That level name already is used in a menu")
+        level_name = input("What do you want the level name to be? ")
+    height = int(input("How high do you want the board to be? "))
+    width = int(input("How wide do you want the board to be? "))
+    max_enemys = int(input("How many enemys at most do you want on the board? "))
+    min_enemys = int(input("How many enemys at least do you want on the board? "))
+
+    # if min_enemys is greater than or equal to max_enemys then we set reask the min
+    while min_enemys >= max_enemys:
+        print("The min number of enemys must be less than the max number of enemys")
+        min_enemys = int(input("How many enemys at least do you want on the board? "))
+
+    enemy_range = int(input("Length of the enemy range? "))
+    max_enemys_per_spawn = int(
+        input("How many enemys at most do you want to spawn at once? ")
+    )
+    lives = int(input("How many lives do you want to start with? "))
+    # enemy range is the length of the enemy minus range of the enemy
+    enemy_range = width - enemy_range
+    with open(f"{sep.join(path)}{sep}levels{sep}levels.csv", "a") as level_file:
+        filewriter = csv.writer(level_file)
+        filewriter.writerow([level_name, height, width, min_enemys, max_enemys, enemy_range, max_enemys_per_spawn, lives])
+
+
+def read_level(level_name):
+    """
+    This function will read specific level from the level file
+    and return the level's height, width, max_enemys, min_enemys, enemy_range, max_enemys_per_spawn, lives
+    """
+    level = []
+    with open(f"{sep.join(path)}{sep}levels{sep}levels.csv", "r") as file:
+        filereader = csv.DictReader(file)
+        for row in filereader:
+            if row["name"] == level_name:
+                level = [
+                    int(row["height"]),
+                    int(row["width"]),
+                    int(row["max_enemys"]),
+                    int(row["min_enemys"]),
+                    int(row["width"])-int(row["enemy_range"]),
+                    int(row["max_enemys_per_spawn"]),
+                    int(row["lives"]),
+                ]
+    
+    return level
+
+
+
 def print_board(board, enemy_range, enemy_pos, width, height):
     """
     this function prints the board
@@ -234,7 +321,10 @@ def main():
     # game intro
     clear(0)
     print(readme())  # print the readme/instructions
-    print("press enter to start, q to quit, or c to configure the game")
+    print("""+---------------------------------------------------------+
+|Press enter to start, q to quit, c to configure the game,|
+|    n to create a new level, or l to load a level.       |
++---------------------------------------------------------+""") 
     while True:
         key = keyboard.is_pressed()
         if key == "enter":
@@ -256,6 +346,61 @@ def main():
                 lives,
             ) = configure_game()
             break
+
+        elif key == "n":
+            while True:
+                clear(0)
+                configure_level()
+                print("""+---------------------------------------------------+
+|Press enter to start, b to go back to the main menu|, 
+|     n to create another level, or q to quit.      |
++---------------------------------------------------+""")
+                continues = input("")
+                if continues == "q":
+                    exit()
+                elif continues == "b":
+                    break
+                elif continues == "n":
+                    continue
+        
+        elif key == "l":
+            while True:
+                clear(0)
+                print("""+--------------------------------------------------+
+|    Enter a level name to start the level or      |
+|          h to see the list of levels.         |
+|Press b to go back to the main menu, or q to quit.|
++--------------------------------------------------+""")
+                level_name = input("")
+                if level_name == "h":
+                    for level in level_list():
+                        print(f"{level}")
+                    print("press enter to continue")
+                    while True:
+                        key = keyboard.is_pressed()
+                        if keyboard.is_pressed() == "enter":
+                            break
+                elif level_name == "b":
+                    break
+                elif level_name == "q":
+                    exit()
+                elif level_name in level_list():
+                    (
+                        height,
+                        width,
+                        max_enemys,
+                        min_enemys,
+                        enemy_range,
+                        max_enemys_per_spawn,
+                        lives,
+                    ) = read_level(level_name)
+                    break
+                else:
+                    print("That level doesn't exist")
+                    continue
+                    
+            
+
 
     # create the board
     board, enemy_pos = create_board(width, height, max_enemys, enemy_range, min_enemys)
