@@ -7,7 +7,7 @@ import keyboard
 
 clears = "clear" if os.name == "posix" else "cls"
 bullet_speed = 0.01 if os.name == "posix" else 0.000000000000000001
-sep = '/' if os.name == "posix" else '\\'
+sep = "/" if os.name == "posix" else "\\"
 
 path = os.path.dirname(os.path.abspath(__file__)).split(sep)
 
@@ -219,6 +219,7 @@ def level_list():
             level_list.append(str(row["name"]))
     return level_list
 
+
 def name_exists(name):
     """
     This function will check if the name exists in the list of names.
@@ -228,6 +229,7 @@ def name_exists(name):
     if name in level_list():
         return True
     return False
+
 
 def configure_level():
     """
@@ -262,7 +264,18 @@ def configure_level():
     enemy_range = width - enemy_range
     with open(f"{sep.join(path)}{sep}levels{sep}levels.csv", "a") as level_file:
         filewriter = csv.writer(level_file)
-        filewriter.writerow([level_name, height, width, min_enemys, max_enemys, enemy_range, max_enemys_per_spawn, lives])
+        filewriter.writerow(
+            [
+                level_name,
+                height,
+                width,
+                min_enemys,
+                max_enemys,
+                enemy_range,
+                max_enemys_per_spawn,
+                lives,
+            ]
+        )
 
 
 def read_level(level_name):
@@ -280,13 +293,12 @@ def read_level(level_name):
                     int(row["width"]),
                     int(row["max_enemys"]),
                     int(row["min_enemys"]),
-                    int(row["width"])-int(row["enemy_range"]),
+                    int(row["width"]) - int(row["enemy_range"]),
                     int(row["max_enemys_per_spawn"]),
                     int(row["lives"]),
                 ]
-    
-    return level
 
+    return level
 
 
 def print_board(board, enemy_range, enemy_pos, width, height):
@@ -321,10 +333,12 @@ def main():
     # game intro
     clear(0)
     print(readme())  # print the readme/instructions
-    print("""+---------------------------------------------------------+
+    print(
+        """+---------------------------------------------------------+
 |Press enter to start, q to quit, c to configure the game,|
 |    n to create a new level, or l to load a level.       |
-+---------------------------------------------------------+""") 
++---------------------------------------------------------+"""
+    )
     while True:
         key = keyboard.is_pressed()
         if key == "enter":
@@ -351,10 +365,12 @@ def main():
             while True:
                 clear(0)
                 configure_level()
-                print("""+---------------------------------------------------+
+                print(
+                    """+---------------------------------------------------+
 |Press enter to start, b to go back to the main menu|, 
 |     n to create another level, or q to quit.      |
-+---------------------------------------------------+""")
++---------------------------------------------------+"""
+                )
                 continues = input("")
                 if continues == "q":
                     exit()
@@ -362,15 +378,17 @@ def main():
                     break
                 elif continues == "n":
                     continue
-        
+
         elif key == "l":
             while True:
                 clear(0)
-                print("""+--------------------------------------------------+
+                print(
+                    """+--------------------------------------------------+
 |    Enter a level name to start the level or      |
 |          h to see the list of levels.         |
 |Press b to go back to the main menu, or q to quit.|
-+--------------------------------------------------+""")
++--------------------------------------------------+"""
+                )
                 level_name = input("")
                 if level_name == "h":
                     for level in level_list():
@@ -398,9 +416,6 @@ def main():
                 else:
                     print("That level doesn't exist")
                     continue
-                    
-            
-
 
     # create the board
     board, enemy_pos = create_board(width, height, max_enemys, enemy_range, min_enemys)
