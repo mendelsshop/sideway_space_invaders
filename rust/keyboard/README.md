@@ -11,3 +11,8 @@ You need to have the following installed:
 * [Option 2]: Run python setup.py install (or however you run python).
 ### [Note]: Pre-built libraries will be avaliable for each new release.
 ### [Note]: There is probably a better way to do this, but I don't know it.
+### [Note]: For macOS prebuilt libraries (for each release) to run them it without getting a code signing error.
+### Go to System Preferences -> Security & Privacy -> Privacy -> Developer Tools: and add Terminal (or your prefered shell) to the list of
+### app that can run software locally that does not meet the system's security policy.
+### Another way to do this is go to System Preferences -> Security & Privacy -> General: at the bottom under Allow apps downloaded from: 
+### you should see a popup that asks if you binary x to be allowed to run. (I think te popup only shows if you run it and get the error) screenshot exmaples coming soon
