@@ -1,3 +1,5 @@
+# TODO: clean, comment and release
+
 import os
 import random
 import time
