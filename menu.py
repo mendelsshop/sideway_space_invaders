@@ -106,7 +106,8 @@ def configure_level():
         or level_name in ["h", "b", "q", "p"]
     ):
         print(
-            "That level name already is used in a menu, is blank, or is a name that is already used."
+            "That level name already is used in a menu, is blank, or is a name that is"
+            " already used."
         )
         level_name = input("What do you want the level name to be? ")
 
@@ -256,7 +257,8 @@ def main_menu():
 
                 elif level_name in level_list():
                     print(
-                        f"Starting level {level_name}, {len(read_level(level_name))} levels left."
+                        f"Starting level {level_name},"
+                        f" {len(read_level(level_name))} levels left."
                     )
                     return read_level(level_name)
 
