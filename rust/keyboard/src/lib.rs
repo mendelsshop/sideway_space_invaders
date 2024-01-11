@@ -35,49 +35,49 @@ fn read_key(timeout: Duration) -> Option<KeyEvent> {
     }
     return None;
 }
-fn is_pressed(py: Python) -> PyResult<String> {
+fn is_pressed(_: Python) -> PyResult<String> {
     match read_key(Duration::from_secs_f64(0.3333)) {
-        Some(KeyEvent {
-            code: KeyCode::Char('q'),
-            modifiers: KeyModifiers::NONE,
-        }) => {
-            return Ok("q".to_string());
-        },
         Some(KeyEvent {
             code: KeyCode::Up,
             modifiers: KeyModifiers::NONE,
+            ..
         }) => {
             return Ok("up".to_string());
         },
         Some(KeyEvent {
             code: KeyCode::Down,
             modifiers: KeyModifiers::NONE,
+            ..
         }) => {
             return Ok("down".to_string());
         },
         Some(KeyEvent {
             code: KeyCode::Enter,
             modifiers: KeyModifiers::NONE,
+            ..
         }) => {
             return Ok("enter".to_string());
         },
         Some(KeyEvent {
             code: KeyCode::Char(' '),
             modifiers: KeyModifiers::NONE,
+            ..
         }) => {
             return Ok("space".to_string());
         },
         Some(KeyEvent {
-            code: KeyCode::Char('l'),
+            code: KeyCode::Char(c),
             modifiers: KeyModifiers::NONE,
+            ..
         }) => {
-            return Ok("l".to_string());
+            return Ok(c.to_string());
         },
         Some(KeyEvent {
-            code: KeyCode::Char('n'),
-            modifiers: KeyModifiers::NONE,
+            code: KeyCode::Char(c),
+            modifiers: KeyModifiers::SHIFT,
+            ..
         }) => {
-            return Ok("n".to_string());
+            return Ok(c.to_uppercase().to_string());
         },
         _ => {
             return Ok("".to_string());
