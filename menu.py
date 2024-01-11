@@ -138,18 +138,16 @@ def configure_level():
     # then we write to the level file the level
     with open(f"{sep.join(path)}{sep}levels{sep}levels.csv", "a") as level_file:
         filewriter = csv.writer(level_file)
-        filewriter.writerow(
-            [
-                level_name,
-                height,
-                width,
-                max_enemys,
-                min_enemys,
-                enemy_range,
-                max_enemys_per_spawn,
-                lives,
-            ]
-        )
+        filewriter.writerow([
+            level_name,
+            height,
+            width,
+            max_enemys,
+            min_enemys,
+            enemy_range,
+            max_enemys_per_spawn,
+            lives,
+        ])
     # and return the level name so it can be used for the p option
     return level_name
 
@@ -181,12 +179,10 @@ def read_level(level_name):
 def main_menu():
     clear(0)
     print(readme())  # print the readme/instructions
-    print(
-        """+----------------------------------------------------------+
+    print("""+----------------------------------------------------------+
 |Press enter to start, q to quit, c to configure the game, |
 |    n to create a new level, or l to load a level.        |
-+----------------------------------------------------------+"""
-    )
++----------------------------------------------------------+""")
     while True:
 
         key = keyboard.is_pressed()
@@ -205,13 +201,11 @@ def main_menu():
             while True:
                 clear(0)
                 new_level = configure_level()
-                print(
-                    """+----------------------------------------------------+
+                print("""+----------------------------------------------------+
 |   Press enter to start, b to go back to the main   | 
 |     n to create another level, p to play the new   |
 |              level, or q to quit.                  |
-+----------------------------------------------------+"""
-                )
++----------------------------------------------------+""")
                 continues = input("> ")
                 if continues == "q":
                     exit()
@@ -228,13 +222,11 @@ def main_menu():
         elif key == "l":
             while True:
                 clear(0)
-                print(
-                    """+---------------------------------------------------+
+                print("""+---------------------------------------------------+
 |    Enter a level name to start the level or       |
 |          h to see the list of levels.             |
 |    Press b to go back to the main  or q to quit.  |
-+---------------------------------------------------+"""
-                )
++---------------------------------------------------+""")
                 level_name = input("> ")
                 if level_name == "h":
                     for level in level_list():
