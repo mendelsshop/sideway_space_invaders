@@ -22,12 +22,6 @@ jobs:
         - '3.9'
         - '3.10'
         - '3.11'
-        python-version-not-dot:
-        - '37'
-        - '38'
-        - '39'
-        - '310'
-        - '311'
         include:
         - os: ubuntu
           platform: linux
@@ -60,12 +54,12 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: linux
-        path: rust/keyboard/build/lib.linux-x86_64-${{ matrix.python-version-not-dot }}/keyboard.cpython-*-x86_64-linux-gnu.so
+        path: rust/keyboard/build/*/*.so
     - name: upload to release
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: rust/keyboard/build/lib.linux-x86_64-${{ matrix.python-version-not-dot }}/keyboard.cpython-*-x86_64-linux-gnu.so
+        file: rust/keyboard/build/*/*.so
         tag: ${{ github.ref }}
         file_glob: true
 
@@ -81,13 +75,6 @@ jobs:
         - '3.8'
         - '3.9'
         - '3.10'
-        python-version-not-dot:
-        - '37'
-        - '38'
-        - '39'
-        - '310'
-        - '311'
-        - '3.11'
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v3 
@@ -116,13 +103,13 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: macos
-        path: rust/keyboard/build/lib.macosx-*.*-x86_64-${{ matrix.python-version-not-dot }}/keyboard.cpython-*-darwin.so
+        path: rust/keyboard/build/*/*.so
 
     - name: upload to release
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: rust/keyboard/build/lib.macosx-*.*-x86_64-${{ matrix.python-version-not-dot }}/keyboard.cpython-*-darwin.so
+        file: rust/keyboard/build/*/*.so
         tag: ${{ github.ref }}
         file_glob: true
   Windows:
@@ -136,13 +123,6 @@ jobs:
         - '3.9'
         - '3.10'
         - '3.11'
-        python-version-not-dot:
-        - '37'
-        - '38'
-        - '39'
-        - '310'
-        - '311'
-      
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python
@@ -171,13 +151,13 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: windows
-        path: rust\keyboard\build\lib.win-amd64-${{ matrix.python-version-not-dot }}\keyboard.cp*-win_amd64.pyd
+        path: rust\keyboard\build\*\*.pyd
     - name: upload to release
       if: github.event_name == 'release'
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: rust/keyboard/build/lib.win-amd64-${{ matrix.python-version-not-dot }}/*.pyd
+        file: rust/keyboard/build/*/*.pyd
         tag: ${{ github.ref }}
         overwrite: true
         file_glob: true
