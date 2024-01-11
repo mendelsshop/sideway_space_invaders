@@ -70,7 +70,6 @@ jobs:
       fail-fast: false
       matrix:
         python-version:
-        - '3.6'
         - '3.7'
         - '3.8'
         - '3.9'
@@ -146,7 +145,6 @@ jobs:
     - name: list files
       run: |
         dir build
-        dir build\lib.win-amd64-${{ matrix.python-version }}\
     - name: upload .pyd
       uses: actions/upload-artifact@v3
       with:
